@@ -43,6 +43,8 @@ endif
 # Prepare files here before installing in user directory
 DIR=$(shell pwd)/bin
 
+all: $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME)
+
 dir:
 	mkdir -p $(DIR)
 
@@ -57,28 +59,23 @@ $(DIR)/$(TARG):: dir
 # dynamically generated and just copy them or create
 # empty stubs.
 $(DIR)/$(TARG).$(OS): dir
-	touch $(DIR).$(TARG).$(OS)
-	test -f $(TARG).$(OS) && cp $(TARG).$(OS) $(DIR)
+	test -f $(TARG).$(OS) && cp $(TARG).$(OS) $(DIR) || touch $(DIR)/$(TARG).$(OS)
 	
 $(DIR)/$(TARG).$(ARCH): dir
-	touch $(DIR).$(TARG).$(ARCH)
-	test -f $(TARG).$(ARCH) && cp $(TARG).$(ARCH) $(DIR)
+	test -f $(TARG).$(ARCH) && cp $(TARG).$(ARCH) $(DIR) || touch $(DIR)/$(TARG).$(ARCH)
 
 $(DIR)/$(TARG).$(HOSTNAME): dir
-	touch $(DIR).$(TARG).$(HOSTNAME)
-	test -f $(TARG).$(HOSTNAME) && cp $(TARG).$(HOSTNAME) $(DIR)
+	test -f $(TARG).$(HOSTNAME) && cp $(TARG).$(HOSTNAME) $(DIR) || touch $(DIR)/$(TARG).$(HOSTNAME)
 
 # This rule assembles the final file.  It explicitly lists $(DIR)/$(TARG)
 # because it may be dynamically generated.
 $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME): $(DIR)/$(TARG) $(DIR)/$(TARG).$(OS) $(DIR)/$(TARG).$(ARCH) $(DIR)/$(TARG).$(HOSTNAME) 
 	cat $(DIR)/$(TARG) $(DIR)/$(TARG).$(OS) $(DIR)/$(TARG).$(ARCH) $(DIR)/$(TARG).$(HOSTNAME) > $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME)
 
-all: $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME)
-
 install: all
 	cp $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME) $(FINALDIR)/$(FINALTARG)
 	
 clean:
-	rm -f $(DIR) >/dev/null 2>&1
+	rm -rf $(DIR) >/dev/null 2>&1
 
 .PHONY:	dir all clean install
