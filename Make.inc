@@ -81,7 +81,4 @@ install: all
 clean:
 	rm -f $(DIR) >/dev/null 2>&1
 
-%.make:
-	$(MAKE) -C $*
-
-.PHONY:	all clean install
+.PHONY:	dir all clean install
