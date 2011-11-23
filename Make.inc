@@ -1,6 +1,6 @@
 # This file is Public Domain.
 
-# Makefile included by all other Makefiles.
+# Makefile included at the end of all other Makefiles.
 
 ifeq ($(OS),)
 DOTOS:=$(shell uname | tr A-Z a-z)
@@ -24,3 +24,61 @@ endif
 # Save for recursive make to avoid recomputing.
 export OS ARCH HOSTNAME
 
+# Makefiles may override this so we don't export it.
+ifeq ($(FINALDIR),)
+FINALDIR:=$(HOME)
+endif
+
+# Final name for the dotfile.
+# Makefiles may override this so we don't export it.
+ifeq ($(FINALTARG),)
+FINALTARG:=.$(TARG)
+endif
+
+# Prepare files here before installing in user directory
+DIR=$(shell pwd)/bin
+
+# Default rule copies the base file IFF it exists.
+# Makefiles add to this rule if the target needs processing.
+# The default rule doesn't create an empty file so that the user
+# receives an error if the target lacks required processing.
+$(DIR)/$(TARG)::
+	mkdir -p $(DIR)
+	test -f $(TARG) && cp $(TARG) $(DIR)
+
+# These rules assume OS/ARCH/HOST specific files are not
+# dynamically generated and just copy them or create
+# empty stubs.
+$(DIR)/$(TARG).$(OS):
+	mkdir -p $(DIR)
+	touch $(DIR).$(TARG).$(OS)
+	test -f $(TARG).$(OS) && cp $(TARG).$(OS) $(DIR)
+	
+$(DIR)/$(TARG).$(ARCH):
+	mkdir -p $(DIR)
+	touch $(DIR).$(TARG).$(ARCH)
+	test -f $(TARG).$(ARCH) && cp $(TARG).$(ARCH) $(DIR)
+
+$(DIR)/$(TARG).$(HOSTNAME):
+	mkdir -p $(DIR)
+	touch $(DIR).$(TARG).$(HOSTNAME)
+	test -f $(TARG).$(HOSTNAME) && cp $(TARG).$(HOSTNAME) $(DIR)
+
+# This rule assembles the final file.  It explicitly lists $(DIR)/$(TARG)
+# because it may be dynamically generated.
+$(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME): $(DIR)/$(TARG) $(DIR)/$(TARG).$(OS) $(DIR)/$(TARG).$(ARCH) $(DIR)/$(TARG).$(HOSTNAME) 
+	mkdir -p $(DIR)
+	cat $(DIR)/$(TARG) $(DIR)/$(TARG).$(OS) $(DIR)/$(TARG).$(ARCH) $(DIR)/$(TARG).$(HOSTNAME) > $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME)
+
+all: $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME)
+
+install: all
+	cp $(DIR)/$(TARG).$(OS).$(ARCH).$(HOSTNAME) $(FINALDIR)/$(FINALTARG)
+	
+clean:
+	rm -f $(DIR) >/dev/null 2>&1
+
+%.make:
+	$(MAKE) -C $*
+
+.PHONY:	all clean install
