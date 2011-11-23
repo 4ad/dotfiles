@@ -1,5 +1,3 @@
-# This file is Public Domain.
-
 # Makefile included at the end of all other Makefiles.
 
 ifeq ($(OS),)
