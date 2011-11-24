@@ -10,6 +10,21 @@ ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/a
 
 export OS ARCH HOSTNAME
 
+# Browsers, in order of preference.
+browsers="
+	firefox
+	opera
+	chromium-browser
+	google-chrome
+	x-www-browser
+"
+# Try to set BROWSER (used by the plumber)
+for i in $browsers; do
+	if which $i >/dev/null 2>&1; then
+		export BROWSER="$i"
+	fi
+done
+
 PATH=.:~/bin:$HOME/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
 PS1='$(
