@@ -1,3 +1,7 @@
+# Source system wide profile first so we don't pollute
+# the environment if we source this file multiple times.
+. /etc/profile
+
 OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
 
 ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
@@ -9,6 +13,22 @@ ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/a
 [ -x /bin/hostname ] && HOSTNAME="`hostname`"
 
 export OS ARCH HOSTNAME
+
+# Make sure all directories in $PATH exist,
+# some tools complain if they don't.
+mkdir -p ~/bin/$OS/$ARCH
+BIN=.:~/bin:~/bin/$OS:~/bin/$OS/$ARCH
+
+# Check for Go.
+[ -f ~/go/include/u.h ] && BIN=$BIN:~/go/bin
+
+PATH=$BIN:$PATH
+
+# Check for Plan9 tools.
+if [ -f ~/plan9/include/u.h ]; then
+	export PLAN9="~/plan9"
+	PATH=$PATH:$PLAN9
+fi
 
 # Browsers, in order of preference.
 browsers="
