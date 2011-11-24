@@ -1,0 +1,13 @@
+# This file is ran by ~/.profile
+
+# Disastrous on Solaris, please fix.
+killall -9 factotum plumber devdraw auxstats 9pserve stats >/dev/null 2>&1
+
+plumber
+
+# These will be enabled later.
+# 9 factotum -n
+# echo -n secstore ''
+# aescbc -d < $HOME/lib/secstore.aes | 9p write -l factotum/ctl
+# eval `9 ssh-agent -e`
+

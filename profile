@@ -139,3 +139,9 @@ alias la='ls -lA'
 
 # Some shells source $ENV when they're interactive
 export ENV=~/.profile
+
+# Try to run only once.
+if [ -n "$PLAN9" ] && [ -z "$P9SETUP" ]; then
+	~/.p9setup
+	export P9SETUP=1
+fi
