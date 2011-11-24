@@ -85,6 +85,17 @@ if [ -f ~/plan9/include/u.h ]; then
 	user=$USER
 	prompt="$H=;"
 
+	# Keep the label up to date, so plumber works.
+	_cd () {
+	        \cd "$@" &&
+        	case $- in
+        	*i*)
+               		awd
+        	esac
+	}
+	alias cd=_cd
+	cd .
+
 	export PLAN9 font EDITOR FCEDIT VISUAL GS_FONTPATH home user prompt 
 fi
 
@@ -103,12 +114,14 @@ for i in $browsers; do
 	fi
 done
 
+# A simple prompt
 PS1='$(printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
 
+# Some aliases.
 alias ls='ls -F'
 alias ll='ls -l'
 alias la='ls -lA'
 
-# Some shells source $ENV when they're interractive
+# Some shells source $ENV when they're interactive
 # but not a login shell.
 export ENV=~/.profile
