@@ -89,16 +89,19 @@ if [ -f ~/plan9/include/u.h ]; then
 	user=$USER
 	prompt="$H=;"
 
-	# Keep the label up to date, so plumber works.
-	_cd () {
-		\cd "$@" &&
-		case $- in
-		*i*)
-			awd
-		esac
-	}
-	alias cd=_cd
-	cd .
+	# Keep the label up to date, so plumber works,
+	# but only if X is running.
+	if [ -n "$DISPLAY" ]; then
+		_cd () {
+			\cd "$@" &&
+			case $- in
+			*i*)
+				awd
+			esac
+		}
+		alias cd=_cd
+		cd .
+	fi
 
 	# If running in 9term or acme, make the environment
 	# more Plan9 like.
@@ -140,8 +143,9 @@ alias la='ls -lA'
 # Some shells source $ENV when they're interactive
 export ENV=~/.profile
 
-# Try to run only once.
-if [ -n "$PLAN9" ] && [ -z "$P9SETUP" ]; then
-	~/.p9setup
-	export P9SETUP=1
+# Try to start X if it isn't started yet and we logged in
+# on tty1
+if [ "`/bin/ls -l /proc/self/fd/0 2>/dev/null | awk '{print $NF}'`" = '/dev/tty1' ];
+then
+	[ -z "$DISPLAY" ] && [ -n "`which startx`" ] && startx
 fi

@@ -1,4 +1,4 @@
-# This file is ran by ~/.profile
+# This file is ran by ~/.xinitrc
 
 # Disastrous on Solaris, please fix.
 killall -9 factotum plumber devdraw auxstats 9pserve stats >/dev/null 2>&1
