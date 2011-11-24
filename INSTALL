@@ -1,6 +1,20 @@
 #!/bin/sh
 
+# srcdir is the directory where this script resides.
+srcdir="$(cd `dirname "$0"` && pwd)"
+cd $srcdir
+
+[ ! -x $PLAN9/bin/9 ] && echo 'error: $PLAN9 is not set or does not point to Plan9 tools.' > /dev/stderr && return 1
+sed="9 sed" # Plan9 sed.
+
+# user can check if we're doing the right thing.
 [ "$1" = '-p' ] && pretend=echo
 
+# First part of the path, be it file or directory,
+# is appended a dot (.) in the front.  We only copy
+# if the name starts with a lowercase letter.
+
+# directories might need to be created before copying files.
 echo "`find . -mindepth 1 -type d | egrep -v '(/\.)|[A-Z]' | 9 sed 's|^(\./)(.+)$|'$pretend' mkdir -p ~/\1.\2|g'`" | sh
+# copy files
 echo "`find . -mindepth 1 | egrep -v '(/\.)|[A-Z]' | 9 sed 's|^(.*)/(.+)$|'$pretend' cp \1/\2 ~/\1/.\2|g'`" | sh
