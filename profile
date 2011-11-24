@@ -99,6 +99,16 @@ if [ -f ~/plan9/include/u.h ]; then
 	alias cd=_cd
 	cd .
 
+	# If running in 9term or acme, make the environment
+	# more Plan9 like.
+	if [ "$TERM" = "9term" ]; then
+		# Disable readline
+		set +o emacs
+		set +o vi
+		# Enable autoexport, like in rc(1).
+		set -a
+	fi
+
 	export PLAN9 font EDITOR FCEDIT VISUAL GS_FONTPATH home user prompt 
 fi
 
