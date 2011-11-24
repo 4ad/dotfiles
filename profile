@@ -29,6 +29,7 @@ fi
 [ ! -h /bin ] && BIN=$BIN:/bin
 # Sorted by preference
 paths="
+	${HOME}/.cabal/bin
 	/sbin
 	/usr/bin
 	/usr/sbin
