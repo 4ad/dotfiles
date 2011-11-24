@@ -1,6 +1,6 @@
 #!/bin/sh
 
-[ $1 = '-p' ] && pretend=echo
+[ "$1" = '-p' ] && pretend=echo
 
 echo "`find . -mindepth 1 -type d | egrep -v '(/\.)|[A-Z]' | 9 sed 's|^(\./)(.+)$|'$pretend' mkdir -p ~/\1.\2|g'`" | sh
 echo "`find . -mindepth 1 | egrep -v '(/\.)|[A-Z]' | 9 sed 's|^(.*)/(.+)$|'$pretend' cp \1/\2 ~/\1/.\2|g'`" | sh
