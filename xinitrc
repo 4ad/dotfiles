@@ -9,6 +9,7 @@ xset -b
 [ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
 
 [ -n "$PLAN9" ] && ~/.p9setup
+[ -n "$PLAN9" ] && plumber
 [ -x /usr/bin/x-www-browser ] && /usr/bin/x-www-browser &
 
 # update the bar

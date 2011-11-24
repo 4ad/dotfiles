@@ -3,8 +3,6 @@
 # Disastrous on Solaris, please fix.
 killall -9 factotum plumber devdraw auxstats 9pserve stats >/dev/null 2>&1
 
-plumber
-
 # These will be enabled later.
 # 9 factotum -n
 # echo -n secstore ''

@@ -53,7 +53,7 @@ PATH=$BIN
 
 # Check for Plan9 tools.
 if [ -f ~/plan9/include/u.h ]; then
-	export PLAN9=~/plan9
+	PLAN9=~/plan9
 	PATH=$PATH:$PLAN9/bin
 
 	mkdir -p ~/lib
