@@ -1,5 +1,14 @@
 This is my collection of dotfiles.  To install all the dotfiles run
-install.sh.  It will replace existing files.
+INSTALL.  It will replace existing files.  INSTALL -p will print
+what commands will be executed instead of executing them.
+
+Files and directories that start with a dot lowercase letter
+(not . or [A-Z]) are copied to $HOME appending a dot in
+the front:
+
+	file -> ~/.file
+	dir(/dirn)+ -> ~/.dir/(dirn)+
+	dir(/dirn)+/file -> ~/.dir/(dirn)+/file
 
 Dependencies between files is handled by the files themselves.
 
