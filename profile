@@ -1,7 +1,3 @@
-# Source system wide profile first so we don't pollute
-# the environment if we source this file multiple times.
-. /etc/profile
-
 OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
 
 ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
@@ -19,14 +15,44 @@ export OS ARCH HOSTNAME
 mkdir -p ~/bin/$OS/$ARCH
 BIN=.:~/bin:~/bin/$OS:~/bin/$OS/$ARCH
 
+# If we're on amd64 and we're not on openbsd, we can
+# also run 32 bit binaries.
+if [ "$ARCH" = "amd64" -a "$OS" != "openbsd" ]; then
+	mkdir -p ~/bin/$OS/386
+	BIN=$BIN:~/bin/$OS/386
+fi
+
 # Check for Go.
 [ -f ~/go/include/u.h ] && BIN=$BIN:~/go/bin
 
-PATH=$BIN:$PATH
+# If /bin is a symlink (some UNICES), don't add it to $PATH
+[ ! -h /bin ] && BIN=$BIN:/bin
+# Sorted by preference
+paths="
+	/sbin
+	/usr/bin
+	/usr/sbin
+	/usr/games
+	/usr/local/bin
+	/usr/local/sbin
+	/usr/pkg/bin
+	/usr/pkg/sbin
+	/opt/bin
+	/opt/sbin
+	/opt/local/bin
+	/opt/local/sbin
+"
+# Add to $PATH if directory exists.
+for i in $paths; do
+	[ -d $i ] && BIN=$BIN:$i
+done
+
+# It's safe to set $PATH here.
+PATH=$BIN
 
 # Check for Plan9 tools.
 if [ -f ~/plan9/include/u.h ]; then
-	export PLAN9="~/plan9"
+	export PLAN9=~/plan9
 	PATH=$PATH:$PLAN9/bin
 
 	mkdir -p ~/lib
