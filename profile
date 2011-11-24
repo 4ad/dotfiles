@@ -57,17 +57,17 @@ if [ -f ~/plan9/include/u.h ]; then
 
 	mkdir -p ~/lib
 
-	export font="$PLAN9/font/luc/unicode.7.font"
+	font="$PLAN9/font/luc/unicode.7.font"
 
 	alias acme="acme -a -f $font -F $PLAN9/font/fixed/unicode.8x13.font -l ~/lib/acme.dump"
 	alias sam='sam -a'
 	
 	# Plumb files instead of starting new editor.
-	export EDITOR=E
+	EDITOR=E
 	unset FCEDIT VISUAL
 
 	# Let gs find the plan9port document fonts.
-	export GS_FONTPATH=$PLAN9/postscript/font
+	GS_FONTPATH=$PLAN9/postscript/font
 
 	# Make man work in 9term and acme's win,
 	# but use a traditional pager under UNIX
@@ -79,6 +79,13 @@ if [ -f ~/plan9/include/u.h ]; then
 		fi
 	}
 	alias man=_man
+
+	# Equivalent variables for rc(1).
+	home=$HOME
+	user=$USER
+	prompt="$H=;"
+
+	export PLAN9 font EDITOR FCEDIT VISUAL GS_FONTPATH home user prompt 
 fi
 
 # Browsers, in order of preference.
