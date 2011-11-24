@@ -63,8 +63,11 @@ if [ -f ~/plan9/include/u.h ]; then
 	alias sam='sam -a'
 	
 	# Plumb files instead of starting new editor.
-	EDITOR=E
-	unset FCEDIT VISUAL
+	# Only if running X.
+	if [ -n "$DISPLAY" ]; then
+		EDITOR=E
+		unset FCEDIT VISUAL
+	fi
 
 	# Let gs find the plan9port document fonts.
 	GS_FONTPATH=$PLAN9/postscript/font
