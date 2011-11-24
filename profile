@@ -87,11 +87,11 @@ if [ -f ~/plan9/include/u.h ]; then
 
 	# Keep the label up to date, so plumber works.
 	_cd () {
-	        \cd "$@" &&
-        	case $- in
-        	*i*)
-               		awd
-        	esac
+		\cd "$@" &&
+		case $- in
+		*i*)
+			awd
+		esac
 	}
 	alias cd=_cd
 	cd .
@@ -116,6 +116,7 @@ done
 
 # A simple prompt
 PS1='$(printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
+# Above prompt doesn't work in zsh
 
 # Some aliases.
 alias ls='ls -F'
