@@ -6,9 +6,9 @@ ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/a
 [ "$OS" = "darwin" ] && ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
 
 # Some Linux distros don't have hostname, amazing.
-[ -x /bin/hostname ] && HOSTNAME="`hostname`"
+[ -x /bin/hostname ] && H="`hostname`"
 
-export OS ARCH HOSTNAME
+export OS ARCH H
 
 # Make sure all directories in $PATH exist,
 # some tools complain if they don't.
@@ -61,6 +61,24 @@ if [ -f ~/plan9/include/u.h ]; then
 
 	alias acme="acme -a -f $font -F $PLAN9/font/fixed/unicode.8x13.font -l ~/lib/acme.dump"
 	alias sam='sam -a'
+	
+	# Plumb files instead of starting new editor.
+	export EDITOR=E
+	unset FCEDIT VISUAL
+
+	# Let gs find the plan9port document fonts.
+	export GS_FONTPATH=$PLAN9/postscript/font
+
+	# Make man work in 9term and acme's win,
+	# but use a traditional pager under UNIX
+	_man() {
+		if [ "$TERM" = "9term" ]; then
+			PAGER=nobs man "$@"
+		else
+			man "$@"
+		fi
+	}
+	alias man=_man
 fi
 
 # Browsers, in order of preference.
@@ -79,8 +97,9 @@ for i in $browsers; do
 done
 
 PS1='$(
-    [[ "${LOGNAME}" == "root" ]] && printf "%s" "${HOSTNAME}:${PWD/${HOME}/~}# " ||
-    printf "%s" "${HOSTNAME}:${PWD/${HOME}/~}\$ ")'
+    [[ "${LOGNAME}" == "root" ]] && printf "%s" "${H}:${PWD/${HOME}/~}# " ||
+    printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
 
 alias ls='ls -F'
-alias ll='ls -lA'
+alias ll='ls -l'
+alias la='ls -lA'
