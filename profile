@@ -103,10 +103,12 @@ for i in $browsers; do
 	fi
 done
 
-PS1='$(
-    [[ "${LOGNAME}" == "root" ]] && printf "%s" "${H}:${PWD/${HOME}/~}# " ||
-    printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
+PS1='$(printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
 
 alias ls='ls -F'
 alias ll='ls -l'
 alias la='ls -lA'
+
+# Some shells source $ENV when they're interractive
+# but not a login shell.
+export ENV=~/.profile
