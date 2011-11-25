@@ -12,7 +12,7 @@ import qualified Data.Map as M
  
 main = do
   xmonad $ defaultConfig
-    { modMask            = myModMask
+    { -- modMask            = myModMask
     , keys               = myKeys
     }
  
