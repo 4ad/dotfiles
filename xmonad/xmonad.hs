@@ -13,12 +13,9 @@ import qualified Data.Map as M
 main = do
   xmonad $ defaultConfig
     { keys = myKeys 
-    -- , modMask = myModMask
     }
  
-myModMask = mod4Mask -- Windows key
 myGSConfig = defaultGSConfig
-
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((mod1Mask, xK_Tab), goToSelected myGSConfig) -- display grid select and go to selected window
     , ((mod4Mask, xK_Tab), gridselectWorkspace myGSConfig W.view) -- display grid select and go to selected workspac

@@ -12,4 +12,5 @@ xset -b
 [ -n "$PLAN9" ] && plumber
 [ -x /usr/bin/x-www-browser ] && /usr/bin/x-www-browser &
 
+xsetroot -cursor_name left_ptr
 [ -n "`which xmonad`" ] && xmonad || xterm
