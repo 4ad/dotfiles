@@ -12,8 +12,8 @@ import qualified Data.Map as M
  
 main = do
   xmonad $ defaultConfig
-    { -- modMask            = myModMask
-    , keys               = myKeys
+    { keys = myKeys 
+    -- , modMask = myModMask
     }
  
 myModMask = mod4Mask -- Windows key
