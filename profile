@@ -51,6 +51,16 @@ done
 # It's safe to set $PATH here.
 PATH=$BIN
 
+# PAGER is set before the Plan9 tools because they might
+# overwrite it.
+if [ -x /bin/less ]; then
+	export PAGER=less
+	export LESS='-imQX'
+else
+	export PAGER=more
+	export MORE='-ei'
+fi
+
 # Check for Plan9 tools.
 if [ -f ~/plan9/include/u.h ]; then
 	PLAN9=~/plan9
@@ -63,35 +73,14 @@ if [ -f ~/plan9/include/u.h ]; then
 	alias acme="acme -a -f $font -F $PLAN9/font/fixed/unicode.8x13.font -l ~/lib/acme.dump"
 	alias sam='sam -a'
 	
-	# Plumb files instead of starting new editor.
 	# Only if running X.
 	if [ -n "$DISPLAY" ]; then
+		# Plumb files instead of starting new editor.		
 		EDITOR=E
-		unset FCEDIT VISUAL
-	fi
-
-	# Let gs find the plan9port document fonts.
-	GS_FONTPATH=$PLAN9/postscript/font
-
-	# Make man work in 9term and acme's win,
-	# but use a traditional pager under UNIX
-	_man() {
-		if [ "$TERM" = "9term" ]; then
-			PAGER=nobs man "$@"
-		else
-			man "$@"
-		fi
-	}
-	alias man=_man
-
-	# Equivalent variables for rc(1).
-	home=$HOME
-	user=$USER
-	prompt="$H=;"
-
-	# Keep the label up to date, so plumber works,
-	# but only if X is running.
-	if [ -n "$DISPLAY" ]; then
+		FCEDIT=$EDITOR
+		VISUAL=$EDITOR
+	
+		# Keep the label up to date, so plumber works
 		_cd () {
 			\cd "$@" &&
 			case $- in
@@ -103,17 +92,29 @@ if [ -f ~/plan9/include/u.h ]; then
 		cd .
 	fi
 
+	# Let gs find the plan9port document fonts.
+	GS_FONTPATH=$PLAN9/postscript/font
+
+	# Equivalent variables for rc(1).
+	home=$HOME
+	user=$USER
+	prompt="$H=;"
+
 	# If running in 9term or acme, make the environment
 	# more Plan9 like.
 	if [ "$TERM" = "9term" ]; then
 		# Disable readline
 		set +o emacs
 		set +o vi
+		
 		# Enable autoexport, like in rc(1).
 		set -a
+		
+		# Make man work in 9term and acme's win,
+		PAGER=nobs
 	fi
 
-	export PLAN9 font EDITOR FCEDIT VISUAL GS_FONTPATH home user prompt 
+	export PLAN9 font EDITOR FCEDIT VISUAL GS_FONTPATH home user prompt PAGER
 fi
 
 # Browsers, in order of preference.
