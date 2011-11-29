@@ -7,6 +7,7 @@ xset -b
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 [ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+[ -n `which setxkbmap` ] && setxkbmap ro >/dev/null 2>&1
 
 [ -n "$PLAN9" ] && ~/.p9setup
 [ -n "$PLAN9" ] && plumber
