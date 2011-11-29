@@ -82,6 +82,8 @@ xterm*faceName:           Monaco:pixelsize=12
 xterm*utf8:               1
 xterm*scrollTtyKeypress:  true
 xterm*scrollTtyOutput:    false
+! Make URLs clickable
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 ! urxvt ----------------------------------------------------------------------
 URxvt.font: Monaco:pixelsize=12
