@@ -28,7 +28,7 @@ fi
 # Check for 9vx
 if [ -f ~/9vx/bin/9vx ] && [ -f nix-os/sys/include/9p.h ]; then
 	BIN=$BIN:~/9vx/bin
-	export 9tree=~/nix-os
+	export plan9tree=~/nix-os
 fi
 
 # If /bin is a symlink (some UNICES), don't add it to $PATH
