@@ -148,5 +148,8 @@ export ENV=~/.profile
 # on tty1 (Linux only)
 if [ "`/bin/ls -l /proc/self/fd/0 2>/dev/null | awk '{print $NF}'`" = '/dev/tty1' ];
 then
-	[ -z "$DISPLAY" ] && [ -n "`which startx`" ] && startx
+	if [ -z "$DISPLAY" ] && [ -n "`which startx`" ]; then
+		startx
+		logout
+	fi
 fi
