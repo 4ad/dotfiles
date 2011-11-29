@@ -29,15 +29,15 @@ fi
 [ ! -h /bin ] && BIN=$BIN:/bin
 # Sorted by preference
 paths="
-	${HOME}/.cabal/bin
+	${HOME}/.cabal/bin	# Xmonad
 	/sbin
 	/usr/bin
 	/usr/sbin
 	/usr/games
-	/usr/local/bin
-	/usr/local/sbin
-	/usr/pkg/bin
-	/usr/pkg/sbin
+	/usr/local/bin	# FreeBSD ports and some Linux stuff
+	/usr/local/sbin # FreeBSD ports and some Linux stuff
+	/usr/pkg/bin	# Usually NetBSD ports
+	/usr/pkg/sbin	# Usually NetBSD ports
 	/opt/bin
 	/opt/sbin
 	/opt/local/bin
@@ -73,7 +73,7 @@ if [ -f ~/plan9/include/u.h ]; then
 	alias acme="acme -a -f $font -F $PLAN9/font/fixed/unicode.8x13.font -l ~/lib/acme.dump"
 	alias sam='sam -a'
 	
-	# Only if running X.
+	# Some Plan9 tools work only in X.
 	if [ -n "$DISPLAY" ]; then
 		# Plumb files instead of starting new editor.		
 		EDITOR=E
@@ -145,7 +145,7 @@ alias la='ls -lA'
 export ENV=~/.profile
 
 # Try to start X if it isn't started yet and we logged in
-# on tty1
+# on tty1 (Linux only)
 if [ "`/bin/ls -l /proc/self/fd/0 2>/dev/null | awk '{print $NF}'`" = '/dev/tty1' ];
 then
 	[ -z "$DISPLAY" ] && [ -n "`which startx`" ] && startx
