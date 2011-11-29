@@ -133,7 +133,7 @@ done
 
 # A simple prompt
 PS1='$(printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
-# Above prompt doesn't work in zsh
+# Above prompt doesn't work in zsh, fixed in .zshrc
 
 # Some aliases.
 alias ls='ls -F'
