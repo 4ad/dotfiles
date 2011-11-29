@@ -18,4 +18,8 @@ UNIX or GNU sed.  If you don't have Plan9, sed copy the files
 by hand or figure out the UNIX regular expression.  If you
 do that please send me a patch.
 
-Everything is under public domain, enjoy.
+Everything is under public domain, except for the Monaco typeface
+for which a license might be required from Apple Inc. for use
+on non Mac OS X systems.
+
+Enjoy!
