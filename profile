@@ -68,9 +68,14 @@ if [ -f ~/plan9/include/u.h ]; then
 
 	mkdir -p ~/lib
 
-	font="$PLAN9/font/luc/unicode.7.font"
+	# Use Anonymous Pro font, if found.
+	if [ -f ~/.fonts/plan9/anon.14.font ]; then
+		font=~/.fonts/plan9/anon.14.font
+	else
+		font="$PLAN9/font/luc/unicode.7.font"
+	fi
 
-	alias acme="acme -a -f $font -F $PLAN9/font/fixed/unicode.8x13.font -l ~/lib/acme.dump"
+	alias acme="acme -a -f $font -F $font"
 	alias sam='sam -a'
 	
 	# Some Plan9 tools work only in X.
