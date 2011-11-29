@@ -6,7 +6,12 @@
  
 import XMonad
 import XMonad.Actions.GridSelect
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.EZConfig(additionalKeys)
+import System.IO
  
 -- import qualified XMonad.StackSet as W
 -- import qualified Data.Map as M
@@ -14,9 +19,14 @@ import XMonad.Hooks.EwmhDesktops
 main = do
     xmonad $ defaultConfig
         { handleEventHook    = fullscreenEventHook
+        , manageHook = manageDocks <+> manageHook defaultConfig
+        , layoutHook = avoidStruts  $  layoutHook defaultConfig
 --        , modMask            = myModMask
 --        , keys               = myKeys
-        }
+        } `additionalKeys`
+        [ ((mod1Mask, xK_Print), spawn "sleep 0.2; scrot -s")
+        , ((0, xK_Print), spawn "scrot")
+        ]
  
 -- myModMask = mod4Mask -- Windows key
 -- myGSConfig = defaultGSConfig
