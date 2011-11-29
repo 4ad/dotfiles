@@ -8,8 +8,6 @@ import XMonad
 import XMonad.Actions.GridSelect
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageDocks
-import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
  
@@ -19,8 +17,6 @@ import System.IO
 main = do
     xmonad $ defaultConfig
         { handleEventHook    = fullscreenEventHook
-        , manageHook = manageDocks <+> manageHook defaultConfig
-        , layoutHook = avoidStruts  $  layoutHook defaultConfig
 --        , modMask            = myModMask
 --        , keys               = myKeys
         } `additionalKeys`
