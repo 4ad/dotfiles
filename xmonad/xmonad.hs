@@ -17,7 +17,6 @@ import qualified Data.Map as M
 main =
     xmonad $ defaultConfig
         { handleEventHook    = fullscreenEventHook
---        , modMask            = myModMask
         } `additionalKeys`
         [ ((mod1Mask, xK_Tab), goToSelected myGSConfig) -- display grid select and go to selected window
         , ((mod4Mask, xK_Tab), gridselectWorkspace myGSConfig W.view) -- display grid select and go to selected workspace
@@ -25,6 +24,5 @@ main =
         , ((0, xK_Print), spawn "scrot") -- take a screen shot of the screen
         ]
  
--- myModMask = mod4Mask -- Windows key
 myGSConfig = defaultGSConfig
 
