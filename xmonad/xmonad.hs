@@ -18,16 +18,9 @@ main =
     xmonad $ defaultConfig
         { handleEventHook    = fullscreenEventHook
         } `additionalKeys`
-        ( myGSKeys ++ myScrotKeys )
+        ( myScrotKeys )
  
-myGSConfig = defaultGSConfig
-
-myGSKeys = 
-    [ ((mod1Mask, xK_Tab), goToSelected myGSConfig) -- display grid select and go to selected window
-    , ((mod4Mask, xK_Tab), gridselectWorkspace myGSConfig W.view) -- display grid select and go to selected workspace
-    ]
-
 myScrotKeys = 
-    [ ((mod1Mask, xK_Print), spawn "sleep 0.2; scrot -s") -- take a screen shot of the window
+    [ ((mod1Mask, xK_Print), spawn "sleep 0.2; scrot -s") -- take a screen shot of a window
     , ((0, xK_Print), spawn "scrot") -- take a screen shot of the screen
     ]
