@@ -81,7 +81,14 @@ if [ -f ~/plan9/include/u.h ]; then
 		font="$PLAN9/font/luc/unicode.7.font"
 	fi
 
-	alias acme="acme -a -f $font -F $font"
+	_acme() {
+		if [ -f ~/acme.dump ]; then
+			acme -a -f $font -F $font -l ~/acme.dump "$@"
+		else
+			acme -a -f $font -F $font "$@"
+		fi
+	}
+	alias acme=_acme
 	alias sam='sam -a'
 	
 	# Some Plan9 tools work only in X.
