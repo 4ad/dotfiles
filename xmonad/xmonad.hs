@@ -6,16 +6,28 @@
  
 import XMonad
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
 import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Util.EZConfig(additionalKeys)
  
 main =
     xmonad $ defaultConfig
-        { handleEventHook    = fullscreenEventHook
+        { handleEventHook = fullscreenEventHook
         , layoutHook = myLayout
+        , manageHook = myManageHook <+> manageHook defaultConfig
         } `additionalKeys`
         ( myScrotKeys )
+
+myManageHook = composeAll
+    [ className =? "x-www-browser" --> doShift "1"
+    , className =? "google-chrome" --> doShift "1"
+    , className =? "chromium-browser" --> doShift "1"
+    , className =? "opera" --> doShift "1"
+    , className =? "firefox" --> doShift "1"
+    , className =? "acme" --> doShift "2"
+    , manageDocks
+    ]
 
 myLayout = smartBorders tiled ||| smartBorders mirrorTiled ||| noBorders Full
   where

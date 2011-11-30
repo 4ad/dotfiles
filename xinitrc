@@ -11,7 +11,9 @@ xset -b
 
 [ -n "$PLAN9" ] && ~/.p9setup
 [ -n "$PLAN9" ] && plumber
+
 [ -x /usr/bin/x-www-browser ] && /usr/bin/x-www-browser &
+[ -n "$PLAN9" ] && acme &
 
 xsetroot -cursor_name left_ptr
 [ -n "`which xmonad`" ] && xmonad || xterm

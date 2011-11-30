@@ -148,9 +148,13 @@ PS1='$(printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
 # Some aliases.
+alias l='ls -F'
+alias lc='ls -F'
 alias ls='ls -F'
 alias ll='ls -l'
 alias la='ls -lA'
+alias t='tmux'
+alias ta='tmux attach'
 
 # Some shells source $ENV when they're interactive
 export ENV=~/.profile
