@@ -5,17 +5,25 @@
 ------------------------------------------------------------------------
  
 import XMonad
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.Run(spawnPipe)
+import System.IO
  
-main =
+main = do
+    xmproc <- spawnPipe "xmobar"
     xmonad $ defaultConfig
         { handleEventHook = fullscreenEventHook
-        , layoutHook = myLayout
+        , layoutHook = avoidStruts(myLayout)
         , manageHook = myManageHook <+> manageHook defaultConfig
+        , logHook = dynamicLogWithPP $ xmobarPP
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = shorten 50
+                        }
         } `additionalKeys`
         ( myScrotKeys )
 

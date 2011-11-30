@@ -162,6 +162,7 @@ alias ll='ls -l'
 alias la='ls -lA'
 alias t='tmux'
 alias ta='tmux attach'
+alias xc='xmonad --recompile'
 
 # Some shells source $ENV when they're interactive
 export ENV=~/.profile
