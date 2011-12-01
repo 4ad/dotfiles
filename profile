@@ -13,7 +13,7 @@ export OS ARCH H
 # Make sure all directories in $PATH exist,
 # some tools complain if they don't.
 mkdir -p ~/bin/$OS/$ARCH
-BIN=.:~/bin:~/bin/$OS:~/bin/$OS/$ARCH
+export BIN=~/bin:~/bin/$OS:~/bin/$OS/$ARCH
 
 # If we're on amd64 and we're not on openbsd, we can
 # also run 32 bit binaries.
@@ -55,7 +55,7 @@ for i in $paths; do
 done
 
 # It's safe to set $PATH here.
-PATH=$BIN
+PATH=.:$BIN
 
 # PAGER is set before the Plan9 tools because they might
 # overwrite it.
@@ -90,6 +90,10 @@ if [ -f ~/plan9/include/u.h ]; then
 	}
 	alias acme=_acme
 	alias sam='sam -a'
+	_rc() {
+		PATH=.:$PLAN9/bin:$BIN rc "$@"
+	}
+	alias rc=_rc
 	
 	# Some Plan9 tools work only in X.
 	if [ -n "$DISPLAY" ]; then
