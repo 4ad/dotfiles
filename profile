@@ -116,7 +116,7 @@ if [ -f ~/plan9/include/u.h ]; then
 	# Equivalent variables for rc(1).
 	home=$HOME
 	user=$USER
-	prompt="$H=; "
+	prompt="$H% "
 
 	# If running in 9term or acme, make the environment
 	# more Plan9 like.
