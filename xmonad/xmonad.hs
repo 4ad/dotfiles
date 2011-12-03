@@ -34,6 +34,7 @@ myManageHook = composeAll
     , className =? "opera" --> doShift "1"
     , className =? "firefox" --> doShift "1"
     , className =? "acme" --> doShift "2"
+    , className =? "9vx" --> doShift "9"
     , manageDocks
     ]
 
