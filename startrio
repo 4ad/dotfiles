@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# This script is started by .xinitrc
+[ -n "`which rio`" ] && rio -font 'Monaco:pixelsize=12' || xterm
