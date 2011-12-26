@@ -15,5 +15,4 @@ xset -b
 [ -x /usr/bin/x-www-browser ] && /usr/bin/x-www-browser &
 [ -n "$PLAN9" ] && acme &
 
-xsetroot -cursor_name left_ptr
-[ -n "`which xmonad`" ] && xmonad || xterm
+~/.startxmonad
