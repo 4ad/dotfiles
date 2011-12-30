@@ -23,10 +23,7 @@ if [ "$ARCH" = "amd64" -a "$OS" != "openbsd" ]; then
 fi
 
 # Check for Go.
-if [ -f ~/go/include/u.h ]; then
-	BIN=$BIN:~/go/bin
-	[ -d ~/src ] && export GOPATH=~
-fi
+[ -f ~/go/include/u.h ] && BIN=$BIN:~/go/bin
 
 # Check for 9vx
 if [ -f ~/9vx/bin/9vx ] && [ -f nix-os/sys/include/9p.h ]; then
