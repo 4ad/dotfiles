@@ -192,8 +192,8 @@ if [ -x "`which csearch`" ] && [ -x "`which cindex`" ]; then
 	}
 	alias csh=_csh
 	alias ci='cindex'
-	# update index at login.
-	echo 'cindex >/dev/null 2>&1' | at now >/dev/null 2>&1
+	# if we have an index, update it at login.
+	[ -f ~/.csearchindex ] && echo 'cindex >/dev/null 2>&1' | at now >/dev/null 2>&1
 fi
 
 # Some shells source $ENV when they're interactive
