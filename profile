@@ -170,6 +170,11 @@ alias la='ls -lA'
 alias t='tmux'
 alias ta='tmux attach'
 alias xc='xmonad --recompile'
+if [ -x "`which csearch`" ] && [ -x "`which cindex`" ]; then
+	alias cs='csearch'
+	alias ci='cindex'
+	cindex >/dev/null 2>&1 &	# update index at login.
+fi
 
 # Some shells source $ENV when they're interactive
 export ENV=~/.profile
