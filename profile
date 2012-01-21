@@ -172,20 +172,23 @@ alias ta='tmux attach'
 alias xc='xmonad --recompile'
 # Russ Cox' code search: http://swtch.com/~rsc/regexp/regexp4.html
 if [ -x "`which csearch`" ] && [ -x "`which cindex`" ]; then
-	# Show line numbers and display paths relative to `pwd`.
-	_cs () {
+	# Filter paths so it's relative to `pwd`.
+	_filterPath () {
 		case "`pwd`" in
 		/)
-			csearch -n "$@"
+			cat
 			;;
 		*)
-			csearch -n "$@" | sed "s|`pwd`/||"
+			sed "s|`pwd`/||"
 			;;
 		esac
 	}
+	_cs () {
+		csearch -n "$@" | _filterPath
+	}
 	alias cs=_cs
 	_csh () {
-		csearch -n -f `pwd` "$@"
+		csearch -n -f `pwd` "$@" | _filterPath
 	}
 	alias csh=_csh
 	alias ci='cindex'
