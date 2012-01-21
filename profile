@@ -170,10 +170,12 @@ alias la='ls -lA'
 alias t='tmux'
 alias ta='tmux attach'
 alias xc='xmonad --recompile'
+# Russ Cox' code search: http://swtch.com/~rsc/regexp/regexp4.html
 if [ -x "`which csearch`" ] && [ -x "`which cindex`" ]; then
-	alias cs='csearch'
+	alias cs='csearch -n'    # show line numbers.
 	alias ci='cindex'
-	cindex >/dev/null 2>&1 &	# update index at login.
+	# update index at login.
+	echo 'cindex >/dev/null 2>&1' | at now >/dev/null 2>&1
 fi
 
 # Some shells source $ENV when they're interactive
