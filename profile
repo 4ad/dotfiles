@@ -158,7 +158,7 @@ for i in $browsers; do
 done
 
 # A simple prompt
-PS1='$(printf "%s" "${H}:${PWD/${HOME}/~}\$ ")'
+PS1='$(printf "%s" "${H}:`basename ${PWD}`$ ")'
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
 # Some aliases.
