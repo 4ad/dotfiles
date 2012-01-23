@@ -25,6 +25,7 @@ fi
 # Check for Go.
 if [ -f ~/go/include/u.h ]; then
 	BIN=$BIN:~/go/bin
+	export GOROOT=~/go
 	[ -d ~/src ] && export GOPATH=~
 fi
 
