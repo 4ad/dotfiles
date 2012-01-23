@@ -40,6 +40,7 @@ fi
 # Sorted by preference
 paths="
 	${HOME}/.cabal/bin	# Xmonad
+	${HOME}/gdb/bin
 	/sbin
 	/usr/bin
 	/usr/sbin
