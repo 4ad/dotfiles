@@ -26,7 +26,10 @@ fi
 if [ -f ~/go/include/u.h ]; then
 	BIN=$BIN:~/go/bin
 	export GOROOT=~/go
-	[ -d ~/src ] && export GOPATH=~
+	export GOPATH=~
+	alias gi='go install'
+	alias gb='go build'
+	alias gg='go get'
 fi
 
 # Check for App Engine.
