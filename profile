@@ -29,6 +29,11 @@ if [ -f ~/go/include/u.h ]; then
 	[ -d ~/src ] && export GOPATH=~
 fi
 
+# Check for App Engine.
+if [ -x ~/google_appengine/appcfg.py ]; then
+	BIN=$BIN:~/google_appengine
+fi
+
 # Check for 9vx
 if [ -f ~/9vx/bin/9vx ] && [ -f nix-os/sys/include/9p.h ]; then
 	BIN=$BIN:~/9vx/bin
