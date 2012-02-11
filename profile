@@ -35,6 +35,8 @@ fi
 # Check for App Engine.
 if [ -x ~/google_appengine/appcfg.py ]; then
 	BIN=$BIN:~/google_appengine
+	alias app=dev_appserver.py
+	alias appcfg=appcfg.py
 fi
 
 # Check for 9vx
