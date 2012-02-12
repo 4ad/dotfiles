@@ -14,7 +14,7 @@ export OS ARCH H
 # some tools complain if they don't.
 mkdir -p ~/bin/$OS/$ARCH
 export BIN=~/bin:~/bin/$OS:~/bin/$OS/$ARCH
-export CDPATH=.
+export CDPATH=.:~
 
 # If we're on amd64 and we're not on openbsd, we can
 # also run 32 bit binaries.
