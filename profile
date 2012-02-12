@@ -14,6 +14,7 @@ export OS ARCH H
 # some tools complain if they don't.
 mkdir -p ~/bin/$OS/$ARCH
 export BIN=~/bin:~/bin/$OS:~/bin/$OS/$ARCH
+export CDPATH=.
 
 # If we're on amd64 and we're not on openbsd, we can
 # also run 32 bit binaries.
@@ -71,6 +72,13 @@ done
 
 # It's safe to set $PATH here.
 PATH=.:$BIN
+
+# Add to $CDPATH non-leaf directories from ~/src, common names excluded.
+# BUG: This should be rewritten not to depend on find and xargs.
+cdpaths="$(find ~/src -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | egrep -v '(bin)|(cmd)|(doc)|(lib)|(pkg)|(test)' | xargs -n1 dirname | uniq)"
+for i in $cdpaths; do
+	CDPATH=$CDPATH:$i
+done
 
 # PAGER is set before the Plan9 tools because they might
 # overwrite it.
