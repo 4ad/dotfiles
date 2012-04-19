@@ -49,8 +49,8 @@ fi
 [ ! -h /bin ] && BIN=$BIN:/bin
 # Sorted by preference
 paths="
-	${HOME}/.cabal/bin	# Xmonad
-	${HOME}/gdb/bin
+	$HOME/.cabal/bin	# Xmonad
+	$HOME/gdb/bin
 	/sbin
 	/usr/bin
 	/usr/sbin
@@ -93,8 +93,6 @@ fi
 if [ -f ~/plan9/include/u.h ]; then
 	PLAN9=~/plan9
 	PATH=$PATH:$PLAN9/bin
-
-	mkdir -p ~/lib
 
 	# Use Anonymous Pro font, if found.
 	if [ -f ~/.fonts/plan9/anon.14.font ]; then
