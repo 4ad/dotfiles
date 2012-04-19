@@ -26,7 +26,6 @@ fi
 # Check for Go.
 if [ -f ~/go/include/u.h ]; then
 	BIN=$BIN:~/go/bin
-	export GOROOT=~/go
 	export GOPATH=~
 	alias gi='go install'
 	alias gb='go build'
