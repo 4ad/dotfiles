@@ -145,6 +145,9 @@ if [ -f ~/plan9/include/u.h ]; then
 	# If running in 9term or acme, make the environment
 	# more Plan9 like.
 	if [ "$TERM" = "9term" ]; then
+		# bzr has problems with 9term
+		TERM=dumb
+		
 		# Disable readline
 		set +o emacs
 		set +o vi
