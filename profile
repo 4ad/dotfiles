@@ -29,7 +29,7 @@ if [ -f ~/go/include/u.h ]; then
 	export GOPATH=~
 	alias gi='go install'
 	alias gb='go build'
-	alias gg='go get'
+	alias gt='go test'
 fi
 
 # Check for App Engine.
