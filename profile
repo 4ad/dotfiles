@@ -40,7 +40,7 @@ if [ -x ~/google_appengine/appcfg.py ]; then
 fi
 
 # Check for 9vx
-if [ -f ~/9vx/bin/9vx ] && [ -f nix-os/sys/include/9p.h ]; then
+if [ -f ~/9vx/bin/9vx ] && [ -f ~/nix-os/sys/include/9p.h ]; then
 	BIN=$BIN:~/9vx/bin
 	export PLAN9VXROOT=~/nix-os
 fi
