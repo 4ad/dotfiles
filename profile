@@ -51,6 +51,7 @@ fi
 paths="
 	$HOME/.cabal/bin	# Xmonad
 	$HOME/gdb/bin
+	$HOME/p4/bin
 	/sbin
 	/usr/bin
 	/usr/sbin
@@ -187,6 +188,10 @@ alias bzco='cobzr checkout'
 alias bz10='bzr log --line -r -10..-1'
 alias bztip='bzr log --line -r -1'
 alias bzlog='bzr log --line'
+alias bzc='bzr commit'
+alias bzd='bzr diff'
+alias bz4d='bzr diff --using p4merge'
+alias bz4m='bzr qresolve'
 alias l='ls -F'
 alias lc='ls -F'
 alias ls='ls -F'
