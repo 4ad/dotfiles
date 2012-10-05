@@ -53,9 +53,11 @@ paths="
 	$HOME/gdb/bin
 	$HOME/p4/bin
 	/sbin
+	/usr/gnu/bin	# For Solaris
 	/usr/bin
 	/usr/sbin
 	/usr/games
+	/usr/sfw/bin	# Solaris stuff
 	/usr/local/bin	# FreeBSD ports and some Linux stuff
 	/usr/local/sbin # FreeBSD ports and some Linux stuff
 	/usr/pkg/bin	# Usually NetBSD ports
@@ -201,7 +203,7 @@ alias t='tmux'
 alias ta='tmux attach'
 alias xc='xmonad --recompile'
 # Russ Cox' code search: http://swtch.com/~rsc/regexp/regexp4.html
-if [ -x "`which csearch`" ] && [ -x "`which cindex`" ]; then
+if [ -x "`which csearch >/dev/null 2>&1`" ] && [ -x "`which cindex >/dev/null 2>&1`" ]; then
 	# Filter paths so it's relative to `pwd`.
 	_filterPath () {
 		case "`pwd`" in
