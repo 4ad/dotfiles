@@ -15,8 +15,8 @@ sed="$PLAN9/bin/sed" # Plan9 sed.
 # if the name starts with a lowercase letter.
 
 # directories might need to be created before copying files.
-echo "`find . -mindepth 1 -maxdepth 1 -type d | egrep -v '(/\.)|[A-Z][A-Z]+' | 9 sed 's|^(\./)(.+)$|'$pretend' rm -rf ~/\1.\2|g'`" | sh
-echo "`find . -mindepth 1 -maxdepth 1 -type d | egrep -v '(/\.)|[A-Z][A-Z]+' | 9 sed 's|^(\./)(.+)$|'$pretend' cp -r \1\2 ~/\1.\2|g'`" | sh
+echo "`find . -mindepth 1 -maxdepth 1 -type d | 9 grep -v '(/\.)|[A-Z][A-Z]+' | 9 sed 's|^(\./)(.+)$|'$pretend' rm -rf ~/\1.\2|g'`" | sh
+echo "`find . -mindepth 1 -maxdepth 1 -type d | 9 grep -v '(/\.)|[A-Z][A-Z]+' | 9 sed 's|^(\./)(.+)$|'$pretend' cp -r \1\2 ~/\1.\2|g'`" | sh
 # copy files.
-echo "`find . -mindepth 1 -maxdepth 1 -type f | egrep -v '(/\.)|[A-Z][A-Z]+' | 9 sed 's|^(.*)/(.+)$|'$pretend' cp \1/\2 ~/\1/.\2|g'`" | sh
+echo "`find . -mindepth 1 -maxdepth 1 -type f | 9 grep -v '(/\.)|[A-Z][A-Z]+' | 9 sed 's|^(.*)/(.+)$|'$pretend' cp \1/\2 ~/\1/.\2|g'`" | sh
 
