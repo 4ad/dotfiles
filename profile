@@ -30,6 +30,14 @@ if [ -f ~/go/include/u.h ]; then
 	alias gi='go install'
 	alias gb='go build'
 	alias gt='go test'
+
+	# Add to $CDPATH non-leaf go packages.
+	# BUG: This should be rewritten not to depend on find and xargs.
+	cdpaths="$(find ~/go/src/pkg -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | xargs -n1 dirname | sort | uniq)"
+	for i in $cdpaths; do
+		CDPATH=$CDPATH:$i
+	done
+	CDPATH=$CDPATH:~/go/src/cmd
 fi
 
 # Check for App Engine.
@@ -195,7 +203,7 @@ alias bzd='bzr diff'
 alias bz4d='bzr diff --using p4merge'
 alias bz4m='bzr qresolve'
 alias l='ls -F'
-alias lc='ls -F'
+alias lc='9 lc'
 alias ls='ls -F'
 alias ll='ls -l'
 alias la='ls -lA'
