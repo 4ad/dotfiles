@@ -6,7 +6,7 @@ ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/a
 [ "$OS" = "darwin" ] && ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
 
 # Some Linux distros don't have hostname, amazing.
-[ -x /bin/hostname ] && H="`hostname`" || H=$OS
+[ -x /bin/hostname ] && H="`hostname -s`" || H=$OS
 
 export OS ARCH H
 
