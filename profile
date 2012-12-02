@@ -32,7 +32,6 @@ if [ -f ~/go/include/u.h ]; then
 	alias gt='go test'
 
 	# Add to $CDPATH non-leaf go packages.
-	# BUG: This should be rewritten not to depend on find and xargs.
 	cdpaths="$(find ~/go/src/pkg -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | xargs -n1 dirname | sort | uniq)"
 	for i in $cdpaths; do
 		CDPATH=$CDPATH:$i
@@ -84,8 +83,7 @@ done
 PATH=.:$BIN
 
 # Add to $CDPATH non-leaf directories from ~/src, common names excluded.
-# BUG: This should be rewritten not to depend on find and xargs.
-cdpaths="$([ -d ~/src ] && find ~/src -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | egrep -v '(bin)|(cmd)|(doc)|(lib)|(pkg)|(test)' | xargs -n1 dirname | uniq)"
+cdpaths="$([ -d ~/src ] && find ~/src -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | egrep -v 'bin|cmd|doc|lib|pkg|test' | xargs -n1 dirname | uniq)"
 for i in $cdpaths; do
 	CDPATH=$CDPATH:$i
 done
