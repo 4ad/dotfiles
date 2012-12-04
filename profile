@@ -104,8 +104,8 @@ if [ -f ~/plan9/include/u.h ]; then
 	PATH=$PATH:$PLAN9/bin
 
 	# Use Anonymous Pro font, if found.
-	if [ -f ~/.fonts/plan9/anon.14.font ]; then
-		font=~/.fonts/plan9/anon.14.font
+	if [ -f ~/.fonts/plan9/anonpro/14a/anon.14.font ]; then
+		font=~/.fonts/plan9/anonpro/14a/anon.14.font
 	else
 		font="$PLAN9/font/luc/unicode.7.font"
 	fi
