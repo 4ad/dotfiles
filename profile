@@ -125,7 +125,7 @@ if [ -f ~/plan9/include/u.h ]; then
 	alias rc=_rc
 	
 	# Some Plan9 tools work only in X.
-	if [ -n "$DISPLAY" ]; then
+	if [ -n "$DISPLAY" ] || [ "$OS" = "darwin" ]; then
 		# Plumb files instead of starting new editor.		
 		EDITOR=E
 		FCEDIT=$EDITOR
