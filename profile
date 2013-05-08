@@ -191,15 +191,11 @@ PS1='$(printf "%s" "${H}:`basename ${PWD}`$ ")'
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
 # Some aliases.
-alias bzb='cobzr branch'
-alias bzco='cobzr checkout'
 alias bz10='bzr log --line -r -10..-1'
 alias bztip='bzr log --line -r -1'
 alias bzlog='bzr log --line'
-alias bzc='bzr commit'
 alias bzd='bzr diff'
-alias bz4d='bzr diff --using p4merge'
-alias bz4m='bzr qresolve'
+alias hg10='hg log -l 10'
 alias l='ls -F'
 alias lc='9 lc'
 alias ls='ls -F'
