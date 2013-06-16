@@ -3,10 +3,17 @@ OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
 ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
 # Even on 64-bit platform, darwin uname -m prints i386.
 # Check for amd64 with sysctl instead.
-[ "$OS" = "darwin" ] && ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
+[ "$OS" = darwin ] && ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
+# Solaris is equally untrustworthy
+[ "$OS" = sunos ] && ARCH=`isainfo -n | sed 's/^..86$$/386/; s/^.86$$/386/'`
 
-# Some Linux distros don't have hostname, amazing.
-[ -x /bin/hostname ] && H="`hostname -s`" || H=$OS
+if [ "$OS" = sunos ]; then
+	# Solaris hostname doesn't have -s.
+	H="`hostname | sed 's/\..*$//'`"
+else
+	# Some Linux distros don't have hostname, amazing.
+	[ -x /bin/hostname ] && H="`/bin/hostname -s`" || H=$OS
+fi
 
 export OS ARCH H
 
