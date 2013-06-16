@@ -7,13 +7,9 @@ ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/a
 # Solaris is equally untrustworthy
 [ "$OS" = sunos ] && ARCH=`isainfo -n | sed 's/^..86$$/386/; s/^.86$$/386/'`
 
-if [ "$OS" = sunos ]; then
-	# Solaris hostname doesn't have -s.
-	H="`hostname | sed 's/\..*$//'`"
-else
-	# Some Linux distros don't have hostname, amazing.
-	[ -x /bin/hostname ] && H="`/bin/hostname -s`" || H=$OS
-fi
+# Don't use hostname -s, some systems don't have it; 
+# also, some Linux distros don't have hostname.
+[ -x /bin/hostname ] && H="`/bin/hostname | sed 's/\..*$//'`" || H=$OS
 
 export OS ARCH H
 
