@@ -59,23 +59,19 @@ fi
 [ ! -h /bin ] && BIN=$BIN:/bin
 # Sorted by preference
 paths="
-	$HOME/.cabal/bin	# Xmonad
-	$HOME/gdb/bin
-	$HOME/p4/bin
-	/sbin
-	/usr/gnu/bin	# For Solaris
+	/opt/local/bin	# Joyent Pkgsrc
+	/opt/local/sbin	# Joyent Pkgsrc
+	/usr/gnu/bin	# Solaris
 	/usr/bin
+	/sbin
 	/usr/sbin
 	/usr/games
 	/usr/sfw/bin	# Solaris stuff
-	/usr/local/bin	# FreeBSD ports and some Linux stuff
-	/usr/local/sbin # FreeBSD ports and some Linux stuff
-	/usr/pkg/bin	# Usually NetBSD ports
-	/usr/pkg/sbin	# Usually NetBSD ports
-	/opt/bin
-	/opt/sbin
-	/opt/local/bin
-	/opt/local/sbin
+	/usr/local/bin	# FreeBSD ports and local Unix stuff
+	/usr/local/sbin # FreeBSD ports and local Unix stuff
+	/usr/pkg/bin	# NetBSD ports
+	/usr/pkg/sbin	# NetBSD ports
+	/opt/DTT	# SmartOS DTrace toolkit
 "
 # Add to $PATH if directory exists.
 for i in $paths; do
