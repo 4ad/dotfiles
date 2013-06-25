@@ -229,13 +229,3 @@ fi
 
 # Some shells source $ENV when they're interactive
 export ENV=~/.profile
-
-# Try to start X if it isn't started yet and we logged in
-# on tty1 (Linux only)
-if [ "`/bin/ls -l /proc/self/fd/0 2>/dev/null | awk '{print $NF}'`" = '/dev/tty1' ];
-then
-	if [ -z "$DISPLAY" ] && [ -n "`which startx`" ]; then
-		startx
-		logout
-	fi
-fi
