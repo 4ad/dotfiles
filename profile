@@ -98,8 +98,23 @@ else
 fi
 
 # Check for Plan9 tools.
+plan9s="
+	/usr/local/plan9
+	$HOME/plan9
+"
+for i in $plan9s; do
+	if [ -f $i/include/u.h ]; then
+		PLAN9=$i
+	fi
+done
+
+if [ -f /usr/local/plan9/include/u.h ]; then
+	PLAN9=/usr/local/plan9
+fi
 if [ -f ~/plan9/include/u.h ]; then
 	PLAN9=~/plan9
+fi
+if [ $PLAN9 != "" ]; then
 	PATH=$PATH:$PLAN9/bin
 
 	# Use Anonymous Pro font, if found.
@@ -166,6 +181,12 @@ if [ -f ~/plan9/include/u.h ]; then
 	fi
 
 	export PLAN9 font EDITOR FCEDIT VISUAL GS_FONTPATH home user prompt PAGER
+else
+	# If we don't have plan9port, perhaps we might have 9base. If we do,
+	# we add to the $PATH so sam -r host works.
+	if [ -x /usr/local/9/bin/sam ]; then
+		PATH=$PATH:/usr/local/9/bin
+	fi
 fi
 
 # Browsers, in order of preference.
