@@ -1,25 +1,4 @@
-This is my collection of dotfiles.  To install all the dotfiles run
-INSTALL.  It will replace existing files.  INSTALL -p will print
-what commands will be executed instead of executing them.
+To install run make.sh or make.rc. Either script supports -p
+(pretend). These files are compatible with Unix and Plan 9.
 
-Files and directories that start with a dot lowercase letter
-(not . or [A-Z]) are copied to $HOME appending a dot in
-the front:
-
-	file -> ~/.file
-	dir(/dirn)+ -> ~/.dir/(dirn)+
-	dir(/dirn)+/file -> ~/.dir/(dirn)+/file
-
-Dependencies between files is handled by the files themselves.
-
-INSTALL uses Plan9 sed because it has a simple syntax that is
-easy to understand.  I won't bother dealing with idiosyncratic
-UNIX or GNU sed.  If you don't have Plan9, sed copy the files
-by hand or figure out the UNIX regular expression.  If you
-do that please send me a patch.
-
-Everything is under public domain, except for the Monaco typeface
-for which a license might be required from Apple Inc. for use
-on non Mac OS X systems.
-
-Enjoy!
+Everything is public domain.
