@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Install profile files (including Plan 9 specific files)
+# on a Unix system. Also see the rc(1) variant.
+
+set -e
+
+tool=`basename $0`
+# srcdir is the directory where this script resides.
+srcdir="$(cd `dirname "$0"` && pwd)"
+
+insttool=sh
+instdir=$HOME
+while getopts phd: name
+do
+	case $name in
+	p) insttool=cat ;;
+	d) instdir=$OPTARG ;;
+	h|?)	cat <<-END >&2
+		# Install profile files on a Unix system.
+		USAGE: $tool [-p] [-d dir]
+		       $tool          # install files in $HOME
+		       $tool -d dir   # install in that directory instead
+		       $tool -p       # print what commands $tool would execute
+	END
+		exit 1
+	esac
+done
+
+files=`find $srcdir -type f -maxdepth 1 \! -name ".*" \! -name "make.*" \! -name "README"`
+dirs=`find $srcdir -type d -mindepth 1 -maxdepth 1 \! -name ".*"`
+
+mkdir -p $instdir
+for f in $files; do
+	printf "cp $f $instdir/.`basename $f`\n"
+done | $insttool
+for d in $dirs; do
+	printf "mkdir -p $instdir/`basename $d`\n"
+	printf "cp -r $d $instdir\n"
+done | $insttool
