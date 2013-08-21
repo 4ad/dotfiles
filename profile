@@ -118,15 +118,15 @@ if [ $PLAN9 != "" ]; then
 	PATH=$PATH:$PLAN9/bin
 
 	# Use Anonymous Pro font, if found.
-	if [ -f ~/.fonts/plan9/anonpro/14a/anon.14.font ]; then
-		font=~/.fonts/plan9/anonpro/14a/anon.14.font
+	if [ -f ~/lib/font/bit/anonpro/14a/anon.14.font ]; then
+		font=~/lib/font/bit/anonpro/14a/anon.14.font
 	else
 		font="$PLAN9/font/luc/unicode.7.font"
 	fi
 
 	_acme() {
 		if [ -f ~/acme.dump ]; then
-			acme -a -f $font -F $font -l ~/acme.dump "$@"
+			acme -a -l ~/acme.dump "$@"
 		else
 			acme -a -f $font -F $font "$@"
 		fi
