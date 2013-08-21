@@ -1,16 +1,23 @@
-OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
+# Don't set -e because we want to login even if sourcing the profile fails.
 
+OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
 ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
 # Even on 64-bit platform, darwin uname -m prints i386.
 # Check for amd64 with sysctl instead.
-[ "$OS" = darwin ] && ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
-# Solaris is equally untrustworthy
-[ "$OS" = sunos ] && ARCH=`isainfo -n | sed 's/^..86$$/386/; s/^.86$$/386/'`
-
-# Don't use hostname -s, some systems don't have it; 
+if [ "$OS" = darwin ]; then
+	ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
+fi
+# Solaris is equally untrustworthy.
+if [ "$OS" = sunos ]; then
+	ARCH=`isainfo -n | sed 's/^..86$$/386/; s/^.86$$/386/'`
+fi
+# Don't use hostname -s, some systems don't support -s; 
 # also, some Linux distros don't have hostname.
-[ -x /bin/hostname ] && H="`/bin/hostname | sed 's/\..*$//'`" || H=$OS
-
+if [ -x /bin/hostname ]; then
+	H="`/bin/hostname | sed 's/\..*$//'`"
+else
+	H=$OS
+fi
 export OS ARCH H
 
 # Make sure all directories in $PATH exist,
