@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# This script is started by .xinitrc
-
-xsetroot -cursor_name left_ptr
-[ -n "`which xmonad`" ] && xmonad || xterm

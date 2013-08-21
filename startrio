@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# This script is started by .xinitrc
-[ -n "`which rio`" ] && rio || xterm
