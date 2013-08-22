@@ -125,6 +125,11 @@ if [ -n "$PLAN9" ]; then
 	else
 		export font="$PLAN9/font/luc/unicode.7.font"
 	fi
+	# On Darwin we want retina support and a custom font.
+	if [ "$OS" = darwin ]; then
+		export devdrawretina=1
+		export font=/mnt/font/Menlo-Regular/22a/font
+	fi
 
 	_acme() {
 		if [ -f $HOME/acme.dump ]; then
@@ -141,7 +146,7 @@ if [ -n "$PLAN9" ]; then
 	alias rc=_rc
 	
 	# Some Plan9 tools work only in X.
-	if [ -n "$DISPLAY" ] || [ "$OS" = "darwin" ] || [ "$TERM" = "9term" ];
+	if [ -n "$DISPLAY" ] || [ "$OS" = darwin ] || [ "$TERM" = 9term ];
 	then
 		# Plumb files instead of starting new editor.		
 		export EDITOR=E
