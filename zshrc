@@ -1,5 +1,6 @@
 # Zsh can't load .profile without this option.
-set -o shwordsplit 
+set -o shwordsplit
+# When testing, remember that this sources the file in $HOME.
 [ -f ~/.profile ] && . ~/.profile
 
 # PS1 set in .profile doesn't work in zsh, so we fix it here.
