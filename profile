@@ -192,7 +192,7 @@ browsers="
 "
 # Try to set BROWSER (used by the plumber)
 for i in $browsers; do
-	if [ -x `which $i 2>/dev/null` ] ; then
+	if [ -x "`which $i 2>/dev/null`" ] ; then
 		export BROWSER="$i"
 	fi
 done
