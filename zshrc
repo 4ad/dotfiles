@@ -11,5 +11,4 @@ PS1='%m:%~$ '
 # this file without ENV, but older shells started from zsf might
 # suffer because ENV is not set. Perhaps zsh support should be
 # removed entirely.
-
 unset ENV
