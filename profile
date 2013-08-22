@@ -1,5 +1,4 @@
 # Don't set -e because we want to login even if sourcing the profile fails.
-set -e
 
 export OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
 export ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
@@ -70,7 +69,6 @@ for i in $paths; do
 done
 # It's safe to set $PATH here.
 PATH=.:$bin
-echo $PATH
 export CDPATH=.:$HOME
 
 # Check for a working Go.
@@ -84,7 +82,6 @@ if [ -x "`which go 2>/dev/null`" ]; then
 	done
 	CDPATH=$CDPATH:$goroot/src/cmd
 fi
-
 # Add to $CDPATH non-leaf directories from $HOME/src, common names excluded.
 if [ -d $HOME/src ]; then
 	cdpaths="$(find $HOME/src -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | egrep -v 'bin|cmd|doc|lib|pkg|test' | xargs -n1 dirname | sort | uniq)"
@@ -103,7 +100,7 @@ else
 	export MORE='-ei'
 fi
 
-# Check for Plan9 tools.
+# Check for Plan 9 tools.
 plan9s="
 	$HOME/plan9
 	/usr/local/plan9
