@@ -201,9 +201,9 @@ browsers="
 	opera
 	chromium-browser
 	google-chrome
-	x-www-browser
 "
-# Try to set BROWSER (used by the plumber)
+# Try to set BROWSER (used by the plumber) On darwin, this will fail. 
+# That's fine, we'll use web(1)'s default.
 for i in $browsers; do
 	if [ -x "`which $i 2>/dev/null`" ] ; then
 		export BROWSER="$i"
