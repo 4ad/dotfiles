@@ -185,30 +185,30 @@ if [ -n "$PLAN9" ]; then
 		# without $PS1 interfering.
 		PS1='$(printf "%s" ": ${H}:`basename ${PWD}`; ")'
 	fi
+
+	# Browsers, in order of preference.
+	browsers="
+		firefox
+		opera
+		chromium-browser
+		google-chrome
+	"
+	# Try to set BROWSER (used by the plumber) On darwin, this will fail. 
+	# That's fine, we'll use web(1)'s default.
+	for i in $browsers; do
+		if [ -x "`which $i 2>/dev/null`" ] ; then
+			export BROWSER="$i"
+		fi
+	done
+
+	alias lc='9 lc'
 else
 	# If we don't have plan9port, perhaps we might have 9base. If we do,
 	# we add to the $PATH so sam -r host works.
 	if [ -x /usr/local/9/bin/sam ]; then
 		PATH=$PATH:/usr/local/9/bin
 	fi
-	
-	alias lc='9 lc'
 fi
-
-# Browsers, in order of preference.
-browsers="
-	firefox
-	opera
-	chromium-browser
-	google-chrome
-"
-# Try to set BROWSER (used by the plumber) On darwin, this will fail. 
-# That's fine, we'll use web(1)'s default.
-for i in $browsers; do
-	if [ -x "`which $i 2>/dev/null`" ] ; then
-		export BROWSER="$i"
-	fi
-done
 
 # Russ Cox's code search: http://swtch.com/$HOMErsc/regexp/regexp4.html
 if [ -x "`which csearch 2>/dev/null`" -a -x "`which cindex 2>/dev/null 2>&1`" ]; then
