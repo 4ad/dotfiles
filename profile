@@ -19,6 +19,11 @@ else
 	export H=$OS
 fi
 
+# Prompt is set here before the Plan 9 tools because they might
+# overwrite it for dumb terminals.
+PS1='$(printf "%s" "${H}:`basename ${PWD}`$ ")'
+# Above prompt doesn't work in zsh, fixed in .zshrc
+
 # Make sure all directories in $PATH exist,
 # some tools complain if they don't.
 mkdir -p $HOME/bin/$OS/$ARCH
@@ -171,6 +176,9 @@ if [ -n "$PLAN9" ]; then
 		set +o vi
 		# Make man work in 9term and acme's win,
 		export PAGER=nobs
+		# Set prompt so we can execute whole line
+		# without $PS1 interfering.
+		PS1='$(printf "%s" ": ${H}:`basename ${PWD}`; ")'
 	fi
 else
 	# If we don't have plan9port, perhaps we might have 9base. If we do,
@@ -231,10 +239,6 @@ alias ll='ls -l'
 alias la='ls -lA'
 alias t='tmux'
 alias ta='tmux attach'
-
-# A simple prompt
-PS1='$(printf "%s" "${H}:`basename ${PWD}`$ ")'
-# Above prompt doesn't work in zsh, fixed in .zshrc
 
 # Some shells source $ENV when they're interactive
 export ENV=$HOME/.profile
