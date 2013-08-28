@@ -99,7 +99,7 @@ fi
 # overwrite it.
 if [ -x "`which less 2>/dev/null`" ]; then
 	export PAGER=less
-	export LESS='-imQX'
+	export LESS='-imEQX'
 else
 	export PAGER=more
 	export MORE='-ei'
