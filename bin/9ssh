@@ -1,0 +1,43 @@
+#!/usr/bin/env rc
+
+. 9.rc
+
+fn usage {
+	echo USAGE:	9ssh [-et] host
+	exit usage
+}
+
+while(~ $1 -*) {
+	switch($1) {
+	case -e
+		edit=true
+	case -t
+		term=true
+	case *
+		usage
+	}
+	shift
+}
+
+if(! ~ $#* 1) usage
+host=$*
+
+fn remote {
+	rusr=`{ssh $host whoami}
+	rns=/tmp/ns.$rusr.:0
+	ssh $host mkdir -m 700 -p $rns
+	cmd=`{printf 'NAMESPACE=%s; 9p stat plumb >/dev/null 2>&1 || plumber' $rns}
+	ssh $host $"cmd
+}
+
+fn local {
+	NAMESPACE=/tmp/ns.$USER.on.$host
+	mkdir -p -m 700 $NAMESPACE
+	9p stat plumb >/dev/null >[2=1] || import -n $rns -s plumb $host
+}
+
+remote
+local
+if (~ $edit true) sam -a -r $host &
+if (~ $term true) 9term ssh $host
+if not ssh $host
