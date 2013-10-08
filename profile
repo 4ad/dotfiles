@@ -131,6 +131,14 @@ if [ -n "$PLAN9" ]; then
 		export font=/mnt/font/Menlo-Regular/22a/font
 	fi
 
+	if [ -z "$DISPLAY" ];
+	then
+		display=:0
+	else
+		display=$DISPLAY
+	fi
+	export NAMESPACE=/tmp/ns.$USER.$display
+
 	_acme() {
 		if [ -f $HOME/acme.dump ]; then
 			acme -a -l $HOME/acme.dump $*
