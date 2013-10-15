@@ -1,6 +1,6 @@
 #!/bin/bash
 
 export devdrawretina=1
-font=rfont
+font=$rfont
 
 exec $*
