@@ -57,6 +57,8 @@ fi
 # Sorted by preference
 paths="
 	/usr/gnu/bin
+	/opt/mse/gcc48/bin
+	/opt/omni/bin
 	$defpath
 	/sbin
 	/usr/sbin
