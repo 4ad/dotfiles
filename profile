@@ -190,7 +190,7 @@ if [ -n "$PLAN9" ]; then
 		set +o emacs
 		set +o vi
 		# Make man work in 9term and acme's win,
-		export PAGER=nobs
+		export PAGER=`which nobs` # Solaris needs full path
 		# Set prompt so we can execute whole line
 		# without $PS1 interfering.
 		PS1='$(printf "%s" ": ${H}:`basename ${PWD}`; ")'
