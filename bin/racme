@@ -1,0 +1,23 @@
+#!/usr/bin/env rc -e
+
+. 9.rc
+
+fn usage {
+	echo USAGE:	racme host [cmd]
+	exit usage
+}
+
+switch($#*) {
+case 1
+	rcmd=_acme
+case 2
+	rcmd=$2
+case *
+	usage
+}
+host=$1
+
+cmd=('DEVDRAW=devdrawserver' $rcmd '</dev/null' '>/dev/null' '2>&1' '&')
+ssh $host $"cmd
+cmd=(ssh $host dial -e unix!/tmp/devdrawserver)
+exec dialdevdraw $"cmd
