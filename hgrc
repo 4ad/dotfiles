@@ -1,2 +1,5 @@
 [ui]
 username = Aram Hăvărneanu <aram@mgk.ro>
+
+[extensions]
+rebase =
