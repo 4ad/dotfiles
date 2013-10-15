@@ -138,6 +138,7 @@ if [ -n "$PLAN9" ]; then
 		display=$DISPLAY
 	fi
 	export NAMESPACE=/tmp/ns.$USER.$display
+	mkdir -p $NAMESPACE
 
 	_acme() {
 		if [ -f $HOME/acme.dump ]; then
