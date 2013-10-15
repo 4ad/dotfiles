@@ -26,7 +26,7 @@ fn remote {
 	rusr=`{ssh $host whoami}
 	rns=/tmp/ns.$rusr.:0
 	ssh $host mkdir -m 700 -p $rns
-	cmd=`{printf 'NAMESPACE=%s; 9p stat plumb >/dev/null 2>&1 || sh -c "NAMESPACE=%s; plumber &"' $rns $rns}
+	cmd=`{printf 'NAMESPACE=%s; 9p stat plumb >/dev/null 2>&1 || plumber </dev/null >/dev/null 2>&1 &' $rns}
 	ssh $host $"cmd
 }
 
