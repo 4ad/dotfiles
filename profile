@@ -125,10 +125,9 @@ if [ -n "$PLAN9" ]; then
 	else
 		export font="$PLAN9/font/luc/unicode.7.font"
 	fi
-	# On Darwin we want retina support and a custom font.
+	# On Darwin we want a retina font, but don't enable by default; see r(1).
 	if [ "$OS" = darwin ]; then
-		export devdrawretina=1
-		export font=/mnt/font/Menlo-Regular/22a/font
+		export rfont=/mnt/font/Menlo-Regular/22a/font
 	fi
 
 	if [ -z "$DISPLAY" ];
