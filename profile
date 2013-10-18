@@ -156,7 +156,7 @@ if [ -n "$PLAN9" ]; then
 	alias rc=_rc
 	
 	# Some Plan9 tools work only in X.
-	if [ -n "$DISPLAY" ] || [ "$OS" = darwin ] || [ "$TERM" = 9term ];
+	if [ -n "$DISPLAY" ] || [ "$OS" = darwin ] || [ "$termprog" = 9term ] || [ "$termprog" = win ];
 	then
 		# Plumb files instead of starting new editor.		
 		export EDITOR=E
