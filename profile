@@ -59,6 +59,7 @@ paths="
 	/usr/gnu/bin
 	/opt/mse/gcc48/bin
 	/opt/omni/bin
+	/opt/niksula/bin/
 	$defpath
 	/sbin
 	/usr/sbin
