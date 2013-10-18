@@ -257,3 +257,5 @@ alias ta='tmux attach'
 
 # Some shells source $ENV when they're interactive
 export ENV=$HOME/.profile
+
+[ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
