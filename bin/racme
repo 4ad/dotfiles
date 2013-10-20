@@ -17,6 +17,15 @@ case *
 }
 host=$1
 
+fn rplumber {
+	rusr=`{ssh $host whoami}
+	rns=/tmp/ns.$rusr.:0
+	ssh $host mkdir -m 700 -p $rns
+	cmd=`{printf 'NAMESPACE=%s; 9p stat plumb >/dev/null 2>&1 || plumber </dev/null >/dev/null 2>&1 &' $rns}
+	ssh $host $"cmd
+}
+
+rplumber
 cmd=('DEVDRAW=devdrawserver' $rcmd '</dev/null' '>/dev/null' '2>&1' '&')
 ssh $host $"cmd
 cmd=(ssh $host dial -e unix!/tmp/devdrawserver)
