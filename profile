@@ -57,7 +57,7 @@ fi
 # Sorted by preference
 paths="
 	/usr/gnu/bin
-	/opt/mse/gcc48/bin
+	/opt/gcc482/bin
 	/opt/omni/bin
 	/opt/niksula/bin/
 	$defpath
