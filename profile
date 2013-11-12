@@ -82,7 +82,7 @@ export CDPATH=.:$HOME
 # Check for a working Go.
 if [ -x "`which go 2>/dev/null`" ]; then
 	export GOPATH=$HOME
-	export GOBIN=$HOME/bin/$OS/$ARCH
+#	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
 	cdpaths="$(find $goroot/src/pkg -mindepth 1 -type d | xargs -n1 dirname | sort | uniq)"
 	for i in $cdpaths; do
