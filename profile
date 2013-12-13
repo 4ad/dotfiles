@@ -58,6 +58,7 @@ fi
 paths="
 	/usr/gnu/bin
 	/opt/gcc482/bin
+	/opt/gcc-4.8.1/bin
 	/opt/omni/bin
 	/opt/niksula/bin/
 	$defpath
