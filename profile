@@ -249,7 +249,7 @@ if [ -x "`which csearch 2>/dev/null`" -a -x "`which cindex 2>/dev/null 2>&1`" ];
 fi
 
 # Some aliases.
-alias hg10='hg log -l 10'
+alias hg10="hg log --template '{node|short} {desc|strip|firstline}\n' -l 10"
 alias l='ls -F'
 alias ls='ls -F'
 alias ll='ls -l'
