@@ -58,6 +58,7 @@ fi
 paths="
 	/usr/gnu/bin
 	/opt/gcc482/bin
+	/opt/gcc-4.8.1/bin
 	/opt/omni/bin
 	/opt/niksula/bin/
 	$defpath
@@ -82,7 +83,7 @@ export CDPATH=.:$HOME
 # Check for a working Go.
 if [ -x "`which go 2>/dev/null`" ]; then
 	export GOPATH=$HOME
-	export GOBIN=$HOME/bin/$OS/$ARCH
+#	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
 	cdpaths="$(find $goroot/src/pkg -mindepth 1 -type d | xargs -n1 dirname | sort | uniq)"
 	for i in $cdpaths; do
@@ -248,7 +249,7 @@ if [ -x "`which csearch 2>/dev/null`" -a -x "`which cindex 2>/dev/null 2>&1`" ];
 fi
 
 # Some aliases.
-alias hg10='hg log -l 10'
+alias hg10="hg log --template '{node|short} {desc|strip|firstline}\n' -l 10"
 alias l='ls -F'
 alias ls='ls -F'
 alias ll='ls -l'

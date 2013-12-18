@@ -3,3 +3,4 @@ username = Aram Hăvărneanu <aram@mgk.ro>
 
 [extensions]
 rebase =
+hgext.purge =
