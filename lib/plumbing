@@ -6,7 +6,7 @@ include basic
 
 # mercurial changesets
 type	is	text
-data	matches	'([a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9])'
+data	matches	'([a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9])'
 plumb	start	9 rc -c 'hg --cwd '$wdir' diff -p -g -c '$1' | plumb -w '$wdir' -d edit -a ''action=showdata filename=+'$1''' -i'
 
 # Google Code CLs
