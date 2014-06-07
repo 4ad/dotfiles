@@ -1,0 +1,24 @@
+# to update: cat $HOME/lib/plumbing | 9p write plumb/rules
+
+editor = acme
+
+include basic
+
+# mercurial changesets
+type	is	text
+data	matches	'([a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9])'
+plumb	start	9 rc -c 'hg --cwd '$wdir' diff -p -g -c '$1' | plumb -w '$wdir' -d edit -a ''action=showdata filename=+'$1''' -i'
+
+# Google Code CLs
+type	is	text
+data	matches	'([0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]?)'
+data	set	https://codereview.appspot.com/$1/
+plumb	to	web
+plumb	start	web $data
+
+# Go issues
+type	is	text
+data	matches	'issue ([0-9][0-9]?[0-9]?[0-9]?[0-9]?)'
+data	set	http://golang.org/issue/$1
+plumb	to	web
+plumb	start	web $data
