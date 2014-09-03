@@ -89,7 +89,7 @@ if [ -x "`which go 2>/dev/null`" ]; then
 	for i in $cdpaths; do
 		CDPATH=$CDPATH:$i
 	done
-	CDPATH=$CDPATH:$goroot/src/cmd
+	CDPATH=$CDPATH:$goroot/src:$goroot/src/cmd
 fi
 # Add to $CDPATH non-leaf directories from $HOME/src, common names excluded.
 if [ -d $HOME/src ]; then
