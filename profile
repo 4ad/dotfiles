@@ -85,11 +85,11 @@ if [ -x "`which go 2>/dev/null`" ]; then
 	export GOPATH=$HOME
 #	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
-	cdpaths="$(find $goroot/src/pkg -mindepth 1 -type d | xargs -n1 dirname | sort | uniq)"
+	cdpaths="$(find $goroot/src -mindepth 1 -type d | xargs -n1 dirname | sort | uniq)"
 	for i in $cdpaths; do
 		CDPATH=$CDPATH:$i
 	done
-	CDPATH=$CDPATH:$goroot/src/cmd
+	CDPATH=$CDPATH:$goroot:$goroot/src/cmd
 fi
 # Add to $CDPATH non-leaf directories from $HOME/src, common names excluded.
 if [ -d $HOME/src ]; then
