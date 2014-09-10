@@ -261,3 +261,7 @@ alias ta='tmux attach'
 export ENV=$HOME/.profile
 
 [ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
+
+# We always want these.
+export LC_ALL=en_US.UTF-8  
+export LANG=en_US.UTF-8
