@@ -250,10 +250,8 @@ fi
 
 # Some aliases.
 alias hg10="hg log --template '{node|short} {desc|strip|firstline}\n' -l 10"
-alias l='ls -F'
-alias ls='ls -F'
-alias ll='ls -l'
-alias la='ls -lA'
+alias hg20="hg log --template '{node|short} {desc|strip|firstline}\n' -l 20"
+alias hgout='hg outgoing --template '\''{node|short} {desc|strip|firstline}\n'\'''
 alias t='tmux'
 alias ta='tmux attach'
 
