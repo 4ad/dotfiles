@@ -1,7 +1,7 @@
 # Don't set -e because we want to login even if sourcing the profile fails.
 
 export OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
-export ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
+export ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/; s/aarch64/arm64/'`"
 # Even on 64-bit platform, darwin uname -m prints i386.
 # Check for amd64 with sysctl instead.
 if [ "$OS" = darwin ]; then
@@ -81,7 +81,7 @@ PATH=.:$bin
 export CDPATH=.:$HOME
 
 # Check for a working Go.
-if [ -x "`which go 2>/dev/null`" ]; then
+if [ -x "`which go 2>/dev/null`" ] && [ -z "`go env GOTOOLDIR | grep gcc`" ]; then
 	export GOPATH=$HOME
 #	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
