@@ -1,7 +1,7 @@
 # Don't set -e because we want to login even if sourcing the profile fails.
 
 export OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
-export ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/'`"
+export ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/; s/aarch64/arm64/'`"
 # Even on 64-bit platform, darwin uname -m prints i386.
 # Check for amd64 with sysctl instead.
 if [ "$OS" = darwin ]; then
@@ -81,7 +81,7 @@ PATH=.:$bin
 export CDPATH=.:$HOME
 
 # Check for a working Go.
-if [ -x "`which go 2>/dev/null`" ]; then
+if [ -x "`which go 2>/dev/null`" ] && [ -z "`go env GOTOOLDIR | grep gcc`" ]; then
 	export GOPATH=$HOME
 #	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
@@ -251,13 +251,9 @@ fi
 # Some aliases.
 alias hg10="hg log --template '{node|short} {desc|strip|firstline}\n' -l 10"
 alias hg20="hg log --template '{node|short} {desc|strip|firstline}\n' -l 20"
-
+alias hgout='hg outgoing --template '\''{node|short} {desc|strip|firstline}\n'\'''
 alias git10="git log -n10 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
 alias git20="git log -n20 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
-alias l='ls -F'
-alias ls='ls -F'
-alias ll='ls -l'
-alias la='ls -lA'
 alias t='tmux'
 alias ta='tmux attach'
 
