@@ -250,6 +250,10 @@ fi
 
 # Some aliases.
 alias hg10="hg log --template '{node|short} {desc|strip|firstline}\n' -l 10"
+alias hg20="hg log --template '{node|short} {desc|strip|firstline}\n' -l 20"
+
+alias git10="git log -n10 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
+alias git20="git log -n20 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
 alias l='ls -F'
 alias ls='ls -F'
 alias ll='ls -l'
