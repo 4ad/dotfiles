@@ -85,18 +85,10 @@ if [ -x "`which go 2>/dev/null`" ] && [ -z "`go env GOTOOLDIR | grep gcc`" ]; th
 	export GOPATH=$HOME
 #	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
-	CDPATH=$CDPATH:$goroot:$goroot/src/cmd
-	cdpaths="$(find $goroot/src -mindepth 1 -type d | xargs -n1 dirname | sort | uniq)"
-	for i in $cdpaths; do
-		CDPATH=$CDPATH:$i
-	done
+	CDPATH=$CDPATH:$goroot:$goroot/src/cmd:$goroot/src
 fi
-# Add to $CDPATH non-leaf directories from $HOME/src, common names excluded.
 if [ -d $HOME/src ]; then
-	cdpaths="$(find $HOME/src -mindepth 1 -type d | egrep -v '/(\.)|_[a-zA-Z0-9]' | egrep -v 'bin|cmd|doc|lib|pkg|test' | xargs -n1 dirname | sort | uniq)"
-	for i in $cdpaths; do
-		CDPATH=$CDPATH:$i
-	done
+	CDPATH=$CDPATH:$HOME/src/code.google.com/p:$HOME/src/golang.org/x:$HOME/src/golang.org/x/tools:$HOME/src/github.com
 fi
 
 # PAGER is set before the Plan 9 tools because they might
