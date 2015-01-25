@@ -88,7 +88,7 @@ if [ -x "`which go 2>/dev/null`" ] && [ -z "`go env GOTOOLDIR | grep gcc`" ]; th
 	CDPATH=$CDPATH:$goroot:$goroot/src/cmd:$goroot/src
 fi
 if [ -d $HOME/src ]; then
-	CDPATH=$CDPATH:$HOME/src/code.google.com/p:$HOME/src/golang.org/x:$HOME/src/golang.org/x/tools:$HOME/src/github.com
+	CDPATH=$CDPATH:$HOME/src/mgk.ro:$HOME/src/golang.org/x:$HOME/src/golang.org/x/tools:$HOME/src/github.com:$HOME/src/rsc.io
 fi
 
 # PAGER is set before the Plan 9 tools because they might
