@@ -85,7 +85,7 @@ if [ -x "`which go 2>/dev/null`" ] && [ -z "`go env GOTOOLDIR | grep gcc`" ]; th
 	export GOPATH=$HOME
 #	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
-	CDPATH=$CDPATH:$goroot:$goroot/src/cmd:$goroot/src
+	CDPATH=$CDPATH:$goroot:$goroot/src/cmd:$goroot/src/cmd/internal:$goroot/src/cmd/internal/obj:$goroot/src
 fi
 if [ -d $HOME/src ]; then
 	CDPATH=$CDPATH:$HOME/src/mgk.ro:$HOME/src/golang.org/x:$HOME/src/golang.org/x/tools:$HOME/src/github.com:$HOME/src/rsc.io
