@@ -41,7 +41,7 @@ goroots="
 	/usr/local/go
 "
 for goroot in $goroots; do
-	if [ -f $goroot/include/u.h ]; then
+	if [ -f $goroot/AUTHORS ]; then
 		bin=$bin:$goroot/bin
 		break
 	fi
