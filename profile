@@ -66,6 +66,7 @@ paths="
 	/usr/sbin
 	/usr/games
 	/usr/sfw/bin
+	/usr/X11R6/bin
 	/usr/local/bin
 	/usr/local/sbin
 	/usr/pkg/bin
