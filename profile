@@ -210,8 +210,8 @@ if [ -n "$PLAN9" ]; then
 else
 	# If we don't have plan9port, perhaps we might have 9base. If we do,
 	# we add to the $PATH so sam -r host works.
-	if [ -x /usr/local/9/bin/sam ]; then
-		PATH=$PATH:/usr/local/9/bin
+	if [ -x /usr/lib/plan9/bin/sam ]; then
+		PATH=$PATH:/usr/lib/plan9/bin
 	fi
 fi
 
