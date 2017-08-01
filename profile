@@ -73,6 +73,8 @@ paths="
 	/usr/local/sbin
 	/usr/pkg/bin
 	/usr/pkg/sbin
+	/opt/pkg/bin
+	/opt/pkg/sbin
 	/opt/DTT
 "
 # Add to $PATH if directory exists.
