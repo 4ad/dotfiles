@@ -3,3 +3,5 @@
 	email = aram@mgk.ro
 [credential]
 	helper = cache
+[color]
+	ui = never
