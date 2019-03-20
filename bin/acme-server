@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# This file needs to be a standard Unix shell script file, not a
+# rc(1) script because the Plan 9 environment might not be set-up
+# when called by ssh(1) non-interactively. And because the Plan 9
+# environment might not be set-up, we must duplicate some of the logic
+# from .profile. This is ssh(1) for you.
+
+plan9s="
+	$HOME/plan9
+	/usr/local/plan9
+"
+for i in $plan9s; do
+	if [ -f $i/include/u.h ]; then
+		export PLAN9=$i
+		break
+	fi
+done
+
+if [ -z "$PLAN9" ]; then
+	echo "acme-server: error: can't find plan9port"
+	exit 1
+fi
+PATH=$PATH:$PLAN9/bin
+
+# make sure we have a consistent namespace, regardless of the
+# existence of $DISPLAY.
+export NAMESPACE=/tmp/ns.$USER.:0
+mkdir -p $NAMESPACE
+
+# Use Lucida Grande font, if found.
+if [ -f "$HOME/.local/share/fonts/Lucida Grande W.ttf" ]; then
+	font=/mnt/font/LucidaGrande-RegularW/10a/font
+elif [ -f $HOME/lib/font/bit/anonpro/14a/anon.14.font ]; then
+	font=$HOME/lib/font/bit/anonpro/14a/anon.14.font
+else
+	font="$PLAN9/font/luc/unicode.7.font"
+fi
+if [ -f "$HOME/.local/share/fonts/Lucida Grande Mono.ttf" ]; then
+	FONT=/mnt/font/LucidaGrandeMono/10a/font
+elif [ -f $HOME/lib/font/bit/anonpro/14a/anon.14.font ]; then
+	FONT=$HOME/lib/font/bit/anonpro/14a/anon.14.font
+else
+	FONT="$PLAN9/font/luc/unicode.7.font"
+fi
+
+_acme() {
+	if [ -f $HOME/acme.dump ]; then
+		acme -a -l $HOME/acme.dump $*
+	else
+		acme -a -f $font -F $FONT $*
+	fi
+}
+
+export DEVDRAW=devdrawserver
+_acme
