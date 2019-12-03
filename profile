@@ -46,6 +46,10 @@ for goroot in $goroots; do
 		break
 	fi
 done
+# Check for a local Rust.
+if [ -f $HOME/.cargo/env ]; then
+	bin=$bin:$HOME/.cargo/bin
+fi
 # On SmartOS we want pkgsrc in front of /usr/bin.
 if [ "$OS" = sunos ]; then
 	[ -d /opt/local/bin ] && bin=$bin:/opt/local/bin
