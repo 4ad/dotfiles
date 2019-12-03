@@ -69,6 +69,8 @@ paths="
 	/usr/X11R6/bin
 	/usr/local/bin
 	/usr/local/sbin
+	/usr/local/smlnj/bin
+	/Library/TeX/texbin
 	/usr/pkg/bin
 	/usr/pkg/sbin
 	/opt/pkg/bin
