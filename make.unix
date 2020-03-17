@@ -28,7 +28,7 @@ do
 done
 
 files=`find $srcdir -maxdepth 1 -type f \! -name ".*" \! -name "make.*" \! -name "README"`
-dirs=`find $srcdir -mindepth 1 -maxdepth 1 -type d \! -name ".*"`
+dirs=`find $srcdir -mindepth 1 -maxdepth 1 -type d \! -name ".git"`
 
 mkdir -p $instdir
 for f in $files; do
