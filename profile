@@ -11,7 +11,7 @@ fi
 if [ "$OS" = sunos ]; then
 	export ARCH=`isainfo -n | sed 's/^..86$$/386/; s/^.86$$/386/'`
 fi
-# Don't use hostname -s, some systems don't support -s; 
+# Don't use hostname -s, some systems don't support -s;
 # also, some Linux distros don't have hostname.
 if [ -x /bin/hostname ]; then
 	export H="`/bin/hostname | sed 's/\..*$//'`"
@@ -157,15 +157,15 @@ if [ -n "$PLAN9" ]; then
 		PATH=.:$PLAN9/bin:$bin rc $*
 	}
 	alias rc=_rc
-	
+
 	# Some Plan9 tools work only in X.
 	if [ -n "$DISPLAY" ] || [ "$OS" = darwin ] || [ "$termprog" = 9term ] || [ "$termprog" = win ];
 	then
-		# Plumb files instead of starting new editor.		
+		# Plumb files instead of starting new editor.
 		export EDITOR=E
 		export FCEDIT=$EDITOR
 		export VISUAL=$EDITOR
-	
+
 		# Keep the label up to date, so plumber works
 		_cd () {
 			\cd "$@" &&
@@ -188,7 +188,7 @@ if [ -n "$PLAN9" ]; then
 
 	# If running in 9term or acme, make the environment
 	# more Plan9 like.
-	if [ "$TERM" = 9term -o "$TERM" = dumb ]; then	
+	if [ "$TERM" = 9term -o "$TERM" = dumb ]; then
 		# Disable readline
 		set +o emacs
 		set +o vi
@@ -206,7 +206,7 @@ if [ -n "$PLAN9" ]; then
 		chromium-browser
 		google-chrome
 	"
-	# Try to set BROWSER (used by the plumber) On darwin, this will fail. 
+	# Try to set BROWSER (used by the plumber) On darwin, this will fail.
 	# That's fine, we'll use web(1)'s default.
 	for i in $browsers; do
 		if [ -x "`which $i 2>/dev/null`" ] ; then
@@ -269,7 +269,7 @@ export ENV=$HOME/.profile
 [ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
 
 # We always want these.
-export LC_ALL=en_US.UTF-8  
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # prevent newer macOS systems from admonishing me.
