@@ -271,3 +271,6 @@ export ENV=$HOME/.profile
 # We always want these.
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
+
+# prevent newer macOS systems from admonishing me.
+export BASH_SILENCE_DEPRECATION_WARNING=1
