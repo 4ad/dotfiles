@@ -5,3 +5,5 @@
 	helper = cache
 [color]
 	ui = never
+[init]
+    defaultBranch = master
