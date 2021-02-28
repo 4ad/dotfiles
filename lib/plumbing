@@ -27,3 +27,12 @@ data	matches	'issue ([0-9][0-9]?[0-9]?[0-9]?[0-9]?)'
 data	set	http://golang.org/issue/$1
 plumb	to	web
 plumb	start	web $data
+
+# BSD source code
+type	is	text
+data	matches	'([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])('$addr')?'
+arg	isfile	/usr/src/$1
+data	set	$file
+attr	add	addr=$3
+plumb	to	edit
+plumb	client	$editor
