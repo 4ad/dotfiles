@@ -1,4 +1,4 @@
 #!/bin/sh
 
 [ -z "$1" ] && prefix='//' || prefix=$1
-9 sed -e "s%([	 ]*)%\1$prefix %"
+9 sed -e "s%([	 ]*)%\1$prefix %" | perl -pe 'chomp if eof'

@@ -1,4 +1,4 @@
 #!/bin/sh
 
 [ -z "$1" ] && prefix='//' || prefix=$1
-c- | fmt | c+ "$prefix"
+c- | fmt | perl -pe 'chomp if eof' | c+ "$prefix"
