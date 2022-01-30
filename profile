@@ -223,32 +223,6 @@ else
 	fi
 fi
 
-# Russ Cox's code search: http://swtch.com/$HOMErsc/regexp/regexp4.html
-if [ -x "`which csearch 2>/dev/null`" -a -x "`which cindex 2>/dev/null 2>&1`" ]; then
-	# Filter paths so it's relative to `pwd`.
-	_filterPath () {
-		case "`pwd`" in
-		/)
-			cat
-			;;
-		*)
-			sed "s|`pwd`/||"
-			;;
-		esac
-	}
-	_cs () {
-		csearch -n "$@" | _filterPath
-	}
-	alias cs=_cs
-	_csh () {
-		csearch -n -f `pwd` "$@" | _filterPath
-	}
-	alias csh=_csh
-	alias ci='cindex'
-	# if we have an index, update it at login.
-	[ -f $HOME/.csearchindex ] && echo 'cindex >/dev/null 2>&1' | at now >/dev/null 2>&1
-fi
-
 # Some aliases.
 alias hg10="hg log --template '{node|short} {desc|strip|firstline}\n' -l 10"
 alias hg20="hg log --template '{node|short} {desc|strip|firstline}\n' -l 20"
