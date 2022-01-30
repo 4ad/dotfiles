@@ -163,6 +163,9 @@ if [ -n "$PLAN9" ]; then
 	then
 		# Plumb files instead of starting new editor.
 		export EDITOR=E
+		if [ -x "`which editinacme 2>/dev/null`" ]; then
+			export EDITOR=editinacme
+		fi
 		export FCEDIT=$EDITOR
 		export VISUAL=$EDITOR
 
