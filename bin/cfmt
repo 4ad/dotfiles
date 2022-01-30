@@ -1,3 +1,4 @@
 #!/bin/sh
 
-c- | fmt | c+
+[ -z "$1" ] && prefix='//' || prefix=$1
+c- | fmt | c+ "$prefix"

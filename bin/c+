@@ -1,3 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 
-sed -e 's|^|// |g'
+[ -z "$1" ] && prefix='//' || prefix=$1
+9 sed -e "s%([	 ]*)%\1$prefix %"
