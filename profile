@@ -232,11 +232,6 @@ alias git20="git log -n20 --no-merges --first-parent --pretty=format:'%h %s (%an
 alias t='tmux'
 alias ta='tmux attach'
 
-md() {
-	mkdir -p $*
-	cd $*
-}
-
 # Some shells source $ENV when they're interactive
 export ENV=$HOME/.profile
 
