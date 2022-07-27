@@ -73,6 +73,8 @@ paths="
 	/usr/X11R6/bin
 	/usr/local/bin
 	/usr/local/sbin
+	/opt/local/bin
+	/opt/local/sbin
 	/opt/homebrew/bin
 	/opt/homebrew/sbin
 	/usr/local/smlnj/bin
