@@ -41,7 +41,7 @@ goroots="
 	/usr/local/go
 "
 for goroot in $goroots; do
-	if [ -f $goroot/AUTHORS ]; then
+	if [ -f $goroot/VERSION ]; then
 		bin=$bin:$goroot/bin
 		break
 	fi
