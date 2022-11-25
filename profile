@@ -50,6 +50,10 @@ done
 if [ -f $HOME/.cargo/env ]; then
 	bin=$bin:$HOME/.cargo/bin
 fi
+# Check for a local Haskell.
+if [ -d $HOME/.ghcup ]; then
+	bin=$bin:$HOME/.ghcup/bin
+fi
 # On SmartOS we want pkgsrc in front of /usr/bin.
 if [ "$OS" = sunos ]; then
 	[ -d /opt/local/bin ] && bin=$bin:/opt/local/bin
@@ -228,6 +232,11 @@ else
 	if [ -x /usr/lib/plan9/bin/sam ]; then
 		PATH=$PATH:/usr/lib/plan9/bin
 	fi
+fi
+
+# Check for a local OCaml. This has to happen after setting PATH.
+if [ -r $HOME/.opam/opam-init/init.sh ]; then
+	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
 
 # Some aliases.
