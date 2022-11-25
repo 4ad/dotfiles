@@ -50,9 +50,13 @@ done
 if [ -f $HOME/.cargo/env ]; then
 	bin=$bin:$HOME/.cargo/bin
 fi
-# Check for a local Haskell.
+# Check for a local Haskell installed through GHCup.
 if [ -d $HOME/.ghcup ]; then
 	bin=$bin:$HOME/.ghcup/bin
+fi
+# Check for cabal.
+if [ -f $HOME/.cabal/config ]; then
+	bin=$bin:$HOME/.cabal/bin
 fi
 # On SmartOS we want pkgsrc in front of /usr/bin.
 if [ "$OS" = sunos ]; then
