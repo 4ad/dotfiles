@@ -102,7 +102,7 @@ PATH=.:$bin
 export CDPATH=.:$HOME
 
 # Check for a working Go.
-if [ -x "`which go 2>/dev/null`" ] && [ -z "`go env GOTOOLDIR | grep gcc`" ]; then
+if [ -x "`which go 2>/dev/null`" ] && [ -z "`GOPATH=/tmp go env GOTOOLDIR | grep gcc`" ]; then
 	export GOPATH=$HOME
 #	export GOBIN=$HOME/bin/$OS/$ARCH
 	goroot=`go env GOROOT`
