@@ -242,6 +242,12 @@ fi
 if [ -r $HOME/.opam/opam-init/init.sh ]; then
 	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
+# Check for a standalone Dune. This has to happen after initializing
+# opam because opam places itself as first item in the PATH and we
+# need to put the standalone dune before the opam one.
+if [ -r $HOME/.local/share/dune/env/env.bash ]; then
+	. $HOME/.local/share/dune/env/env.bash > /dev/null 2> /dev/null || true
+fi
 
 # Some aliases.
 alias git10="git log -n10 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
