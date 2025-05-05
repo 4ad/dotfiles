@@ -1,0 +1,5 @@
+#/bin/bash
+
+ssh-add -q -t 5 --apple-load-keychain ~/.ssh/id_ed25519
+KEY=$(ssh-add -L | head -n 1)
+echo key::$KEY

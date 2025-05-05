@@ -7,3 +7,8 @@
 	ui = never
 [init]
     defaultBranch = master
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	defaultKeyCommand = /Users/aram/bin/git-config-helper-gpg.ssh.defaultKeyCommand
+	allowedSignersFile = /Users/aram/.ssh/allowed_signers
