@@ -98,7 +98,7 @@ for i in $paths; do
 	[ -d $i ] && bin=$bin:$i
 done
 # It's safe to set $PATH here.
-PATH=.:$bin
+PATH=$bin
 export CDPATH=.:$HOME
 
 # Check for a working Go.
@@ -240,13 +240,9 @@ fi
 
 # Check for a local OCaml. This has to happen after setting PATH.
 if [ -r $HOME/.opam/opam-init/init.sh ]; then
+	# we want opam to initialize for every shell.
+	unset OPAM_SWITCH_PREFIX
 	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-fi
-# Check for a standalone Dune. This has to happen after initializing
-# opam because opam places itself as first item in the PATH and we
-# need to put the standalone dune before the opam one.
-if [ -r $HOME/.local/share/dune/env/env.bash ]; then
-	. $HOME/.local/share/dune/env/env.bash > /dev/null 2> /dev/null || true
 fi
 
 # Some aliases.
