@@ -1,13 +1,10 @@
-# Zsh can't load .profile without this option.
-set -o shwordsplit
-# When testing, remember that this sources the file in $HOME.
-[ -f ~/.profile ] && . ~/.profile
+[[ -f $HOME/.rc ]] && . $HOME/.rc
 
-# PS1 set in .profile doesn't work in zsh, so we fix it here.
+# PS1 set in .rc doesn't work in zsh, so we fix it here.
 PS1='%m:%1d$ '
 
-# Redo what we did in .profile, but unset above.
-if [ "$TERM" = 9term -o "$TERM" = dumb ]; then
+# Redo what we did in .rc, but unset above.
+if [ "$TERM" = 9term ] || [ "$TERM" = dumb ]; then
 	# unfuck TERM=dumb
 	unset zle_bracketed_paste
 	unsetopt prompt_cr
@@ -16,8 +13,6 @@ if [ "$TERM" = 9term -o "$TERM" = dumb ]; then
 	PS1=': %m:%1d; '
 fi
 
-# ENV is set to .profile, but zsh can't load .profile directly (see
-# set -o shwordsplit above) so we unset ENV. Zsh knows how to load
-# this file without ENV, but older shells started from zsh might
-# suffer because ENV is not set. This is unfortunate.
-unset ENV
+if command -v direnv >/dev/null 2>&1; then
+	eval "$(direnv hook zsh)"
+fi

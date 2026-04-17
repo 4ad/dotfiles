@@ -1,5 +1,3 @@
-[ -f ~/.profile ] && . ~/.profile
+[[ -f $HOME/.profile ]] && . $HOME/.profile
 
-if [ -x "`which direnv 2>/dev/null`" ]; then
-	eval "$(direnv hook bash)"
-fi
+[[ $- == *i* && -f $HOME/.bashrc ]] && . $HOME/.bashrc

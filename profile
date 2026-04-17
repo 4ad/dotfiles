@@ -1,134 +1,114 @@
-# Don't set -e because we want to login even if sourcing the profile fails.
+# Don't set -e because we want to be able to login even if sourcing
+# the profile fails.
 
-export OS="`uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/'`"
-export ARCH="`uname -m | sed 's/^..86$$/386/; s/^.86$$/386/; s/x86_64/amd64/; s/arm.*/arm/; s/aarch64/arm64/'`"
-# Even on 64-bit platform, darwin uname -m prints i386.
-# Check for amd64 with sysctl instead.
-if [ "$OS" = darwin ]; then
-	export ARCH="`if sysctl machdep.cpu.extfeatures 2>&1 | grep EM64T >/dev/null; then echo amd64; else uname -m | sed 's/i386/386/'; fi`"
-fi
-# Solaris is equally untrustworthy.
-if [ "$OS" = sunos ]; then
-	export ARCH=`isainfo -n | sed 's/^..86$$/386/; s/^.86$$/386/'`
-fi
-# Don't use hostname -s, some systems don't support -s;
-# also, some Linux distros don't have hostname.
-if [ -x /bin/hostname ]; then
-	export H="`/bin/hostname | sed 's/\..*$//'`"
-else
-	export H=$OS
-fi
+OS="$(uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/')"
 
-# Prompt is set here before the Plan 9 tools because they might
-# overwrite it for dumb terminals.
-PS1='$(printf "%s" "${H}:`basename ${PWD}`$ ")'
-# Above prompt doesn't work in zsh, fixed in .zshrc
-
-# Make sure all directories in $PATH exist,
-# some tools complain if they don't.
-mkdir -p $HOME/bin/$OS/$ARCH
-bin=$HOME/bin:$HOME/bin/$OS:$HOME/bin/$OS/$ARCH
-# If we're on amd64 and we're not on openbsd, we can
-# also run 32 bit binaries.
-if [ "$ARCH" = "amd64" -a "$OS" != "openbsd" ]; then
-	mkdir -p $HOME/bin/$OS/386
-	bin=$bin:$HOME/bin/$OS/386
-fi
-# Add a local Go to $PATH. This will fail for a system-provided Go,
-# that's fine, a later generic check will find it.
-goroots="
-	$HOME/go
-	/usr/local/go
+# Sorted by preference. GHCup has to come before Cabal.
+PATHS_USER="
+	${HOME}/bin
+	${HOME}/.local/bin
+	${HOME}/.cargo/bin
+	${HOME}/.ghcup/bin
+	${HOME}/.cabal/bin
+	${HOME}/go/bin
 "
-for goroot in $goroots; do
-	if [ -f $goroot/LICENSE ] || [ -d $goroot/bin ]; then
-		bin=$bin:$goroot/bin
-		break
-	fi
-done
-# Check for a local Rust.
-if [ -f $HOME/.cargo/env ]; then
-	bin=$bin:$HOME/.cargo/bin
-fi
-# Check for a local Haskell installed through GHCup.
-if [ -d $HOME/.ghcup ]; then
-	bin=$bin:$HOME/.ghcup/bin
-fi
-# Check for cabal.
-if [ -f $HOME/.cabal/config ]; then
-	bin=$bin:$HOME/.cabal/bin
-fi
+
 # On SmartOS we want pkgsrc in front of /usr/bin.
 if [ "$OS" = sunos ]; then
-	[ -d /opt/local/bin ] && bin=$bin:/opt/local/bin
-	[ -d /opt/local/sbin ] && bin=$bin:/opt/local/sbin
+	PATHS_SMARTOS="
+		/opt/local/bin
+		/opt/local/sbin
+		/opt/tools/bin
+		/opt/tools/sbin
+	"
 fi
-# If /bin is a symlink (Solaris, some Linux distros, etc), don't
-# add it to $PATH.
-[ -h /bin ] && defpath=/usr/bin || defpath="/bin /usr/bin"
-# Sorted by preference
-paths="
-	/usr/gnu/bin
-	/opt/gcc482/bin
-	/opt/gcc-4.8.1/bin
-	/opt/omni/bin
-	/opt/niksula/bin/
-	$defpath
-	/sbin
+
+# Sorted by preference. On macOS path_helper(8) might reset
+# the order, that's fine.
+PATHS_SYS="
+	/proc/boot
+	${PATHS_SMARTOS}
 	/usr/sbin
-	/usr/games
-	/usr/sfw/bin
+	/usr/bsd
+	/usr/bin
+	/sbin
+	/bin
+	/snap/bin
+	/usr/gnu/bin
+	/usr/ccs/bin
+	/usr/dt/bin
+	/usr/openwin/bin
+	/usr/X11R7/bin
 	/usr/X11R6/bin
-	/usr/local/bin
-	/usr/local/sbin
-	/opt/local/bin
-	/opt/local/sbin
-	/opt/homebrew/bin
-	/opt/homebrew/sbin
-	/usr/local/smlnj/bin
-	/Library/TeX/texbin
+	/usr/X11/bin
+	/opt/X11/bin
+	/usr/bin/X11
+	/usr/X/bin
+	/usr/ucb
+	/usr/games
+	/Library/Apple/usr/bin
+	/opt/bin
+	/opt/DTT
+	/opt/DTT/bin
+	/usr/local/go/bin
+	/usr/sfw/bin
 	/usr/pkg/bin
 	/usr/pkg/sbin
-	/opt/pkg/bin
-	/opt/pkg/sbin
-	/opt/DTT
+	/opt/local/bin
+	/opt/local/sbin
+	/usr/local/bin
+	/usr/local/sbin
+	/usr/local/games
+	/opt/homebrew/bin
+	/opt/homebrew/sbin
+	/opt/ooce/bin
+	/opt/sfw/bin
+	/opt/freeware/bin
+	/usr/freeware/bin
+	/usr/nekoware/bin
+	/opt/sw
 "
-# Add to $PATH if directory exists.
-for i in $paths; do
-	[ -d $i ] && bin=$bin:$i
+
+# unset BIN so this script is idempotent.
+unset BIN
+for i in $PATHS_USER $PATHS_SYS; do
+	# Add to $PATH if directory exists and is not a symlink.
+	# This avoids duplicate PATH entries on systems where
+	# /bin is a symlink to /usr/bin (Solaris, modern Linux, etc).
+	[ -d "$i" ] && [ ! -h "$i" ] && BIN="${BIN:+$BIN:}$i"
 done
+
 # It's safe to set $PATH here.
-PATH=$bin
+export PATH=$BIN
+
+# Run path_helper(8), if available. This is macOS specific.
+# It adds macOS cryptexes to the PATH as well as .pkg packages
+# that installed their path in /etc/paths.d.
+if [ -x /usr/libexec/path_helper ]; then
+	eval "$(/usr/libexec/path_helper -s)"
+fi
+
+# GOPATH defaults to $HOME/go, but we don't want that because
+# there could be a local Go install there.
+export GOPATH=$HOME
+
 export CDPATH=.:$HOME
-
-# Check for a working Go.
-if [ -x "`which go 2>/dev/null`" ] && [ -z "`GOPATH=/tmp go env GOTOOLDIR | grep gcc`" ]; then
-	export GOPATH=$HOME
-#	export GOBIN=$HOME/bin/$OS/$ARCH
-	goroot=`go env GOROOT`
-	CDPATH=$CDPATH:$goroot:$goroot/src/cmd:$goroot/src/cmd/internal:$goroot/src/cmd/internal/obj:$goroot/src/cmd/asm/internal:$goroot/src
-fi
 if [ -d $HOME/src ]; then
-	CDPATH=$CDPATH:$HOME/src:$HOME/src/mgk.ro:$HOME/src/mgk.ro/cmd:$HOME/src/mgk.ro/attic:$HOME/src/mgk.ro/debug:$HOME/src/golang.org/x:$HOME/src/golang.org/x/tools:$HOME/src/github.com:$HOME/src/rsc.io
+	CDPATH=$CDPATH:$HOME/src:$HOME/src/mgk.ro:$HOME/src/mgk.ro/cmd:$HOME/src/mgk.ro/cmd/plan9
 fi
 
-# PAGER is set before the Plan 9 tools because they might
-# overwrite it.
-if [ -x "`which less 2>/dev/null`" ]; then
-	export PAGER=less
-	export LESS='-imEQX'
-else
-	export PAGER=more
-	export MORE='-ei'
+# Check for a local OCaml. This has to happen after setting PATH.
+if [ -r $HOME/.opam/opam-init/init.sh ]; then
+	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
 
 # Check for Plan 9 tools.
-plan9s="
-	$HOME/plan9
+PLAN9S="
+	${HOME}/plan9
 	/usr/local/plan9
 "
-for i in $plan9s; do
-	if [ -f $i/include/u.h ]; then
+for i in $PLAN9S; do
+	if [ -f "$i/include/u.h" ]; then
 		export PLAN9=$i
 		break
 	fi
@@ -136,100 +116,20 @@ done
 if [ -n "$PLAN9" ]; then
 	PATH=$PATH:$PLAN9/bin
 
-	# Use Anonymous Pro font, if found.
-	if [ -f $HOME/lib/font/bit/anonpro/14a/anon.14.font ]; then
-		export font=$HOME/lib/font/bit/anonpro/14a/anon.14.font
-	else
-		export font="$PLAN9/font/luc/unicode.7.font"
-	fi
-	# On Darwin we want a retina font, but don't enable by default; see r(1).
-	if [ "$OS" = darwin ]; then
-		export rfont=/mnt/font/Menlo-Regular/22a/font
+	display=${DISPLAY:-:0}
+	nsdisplay=$(printf '%s' "$display" | tr '/' '_')
+	export NAMESPACE=/tmp/ns.$USER.$nsdisplay
+	mkdir -p "$NAMESPACE"
+
+	if fontsrv -p LucidaGrandeMono >/dev/null 2>&1; then
+		export font=/mnt/font/LucidaGrandeMono/14a/font
 	fi
 
-	if [ -z "$DISPLAY" ];
-	then
-		display=:0
-	else
-		display=$DISPLAY
-	fi
-	export NAMESPACE=/tmp/ns.$USER.$display
-	mkdir -p $NAMESPACE
-
-	_acme() {
-		if [ -f $HOME/acme.dump ]; then
-			acme -a -l $HOME/acme.dump $*
-		else
-			acme -a -f $font -F $font $*
-		fi
-	}
-	alias acme=_acme
-	alias sam='sam -a'
-	_rc() {
-		PATH=.:$PLAN9/bin:$bin rc $*
-	}
-	alias rc=_rc
-
-	# Some Plan9 tools work only in X.
-	if [ -n "$DISPLAY" ] || [ "$OS" = darwin ] || [ "$termprog" = 9term ] || [ "$termprog" = win ];
-	then
-		# Plumb files instead of starting new editor.
-		export EDITOR=E
-		if [ -x "`which editinacme 2>/dev/null`" ]; then
-			export EDITOR=editinacme
-		fi
-		export FCEDIT=$EDITOR
-		export VISUAL=$EDITOR
-
-		# Keep the label up to date, so plumber works
-		_cd () {
-			\cd "$@" &&
-			case $- in
-			*i*)
-				awd
-			esac
-		}
-		alias cd=_cd
-		cd .
-	fi
-
-	# Let gs find the plan9port document fonts.
 	export GS_FONTPATH=$PLAN9/postscript/font
 
 	# Equivalent variables for rc(1).
 	export home=$HOME
 	export user=$USER
-	export prompt="$H% "
-
-	# If running in 9term or acme, make the environment
-	# more Plan9 like.
-	if [ "$TERM" = 9term -o "$TERM" = dumb ]; then
-		# Disable readline
-		set +o emacs
-		set +o vi
-		# Make man work in 9term and acme's win,
-		export PAGER=`which nobs` # Solaris needs full path
-		# Set prompt so we can execute whole line
-		# without $PS1 interfering.
-		PS1='$(printf "%s" ": ${H}:`basename ${PWD}`; ")'
-	fi
-
-	# Browsers, in order of preference.
-	browsers="
-		firefox
-		opera
-		chromium-browser
-		google-chrome
-	"
-	# Try to set BROWSER (used by the plumber) On darwin, this will fail.
-	# That's fine, we'll use web(1)'s default.
-	for i in $browsers; do
-		if [ -x "`which $i 2>/dev/null`" ] ; then
-			export BROWSER="$i"
-		fi
-	done
-
-	alias lc='9 lc'
 else
 	# If we don't have plan9port, perhaps we might have 9base. If we do,
 	# we add to the $PATH so sam -r host works.
@@ -238,27 +138,26 @@ else
 	fi
 fi
 
-# Check for a local OCaml. This has to happen after setting PATH.
-if [ -r $HOME/.opam/opam-init/init.sh ]; then
-	# we want opam to initialize for every shell.
-	unset OPAM_SWITCH_PREFIX
-	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+# We prefer en_US.UTF-8 locale, but we only set it when unset to allow
+# ssh logins to set their own locale. If that locale is unavailable,
+# try C.UTF-8 and otherwise leave LANG unset.
+#
+# We don't set LC_* to give the user an overridable hook.
+if [ -z "${LANG:-}" ]; then
+	for lang in en_US.UTF-8 C.UTF-8; do
+		if command -v locale >/dev/null 2>&1 &&
+			LC_ALL= LANG=$lang locale charmap >/dev/null 2>&1
+		then
+			export LANG=$lang
+			break
+		fi
+	done
 fi
-
-# Some aliases.
-alias git10="git log -n10 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
-alias git20="git log -n20 --no-merges --first-parent --pretty=format:'%h %s (%an)'"
-alias t='tmux'
-alias ta='tmux attach'
-
-# Some shells source $ENV when they're interactive
-export ENV=$HOME/.profile
-
-[ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
-
-# We always want these.
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 
 # prevent newer macOS systems from admonishing me.
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+[ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
+
+# Some shells source $ENV when they're interactive
+export ENV=$HOME/.rc
