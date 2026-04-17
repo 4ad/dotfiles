@@ -5,7 +5,8 @@ PS1='%m:%1d$ '
 
 # Redo what we did in .rc, but unset above.
 if [ "$TERM" = 9term ] || [ "$TERM" = dumb ]; then
-	# unfuck TERM=dumb
+	# Disable readline and bracketed paste.
+	unsetopt zle
 	unset zle_bracketed_paste
 	unsetopt prompt_cr
 	# Set prompt so we can execute whole line
