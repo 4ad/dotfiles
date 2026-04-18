@@ -138,23 +138,30 @@ else
 	fi
 fi
 
-# We prefer en_US.UTF-8 locale, but we only set it when unset to allow
-# ssh logins to set their own locale. If that locale is unavailable,
-# try C.UTF-8 and otherwise leave LANG unset.
-#
-# We don't set LC_* to give the user an overridable hook.
-if [ -z "${LANG:-}" ]; then
-	for lang in en_US.UTF-8 C.UTF-8; do
-		if command -v locale >/dev/null 2>&1 &&
-			LC_ALL= LANG=$lang locale charmap >/dev/null 2>&1
-		then
-			export LANG=$lang
-			break
+# Set LANG when unset. On macOS, always set it because /etc/zprofile
+# indiscriminately sets LANG=C.UTF-8. Additionally Terminal.app may
+# inject a broken LC_CTYPE=UTF-8 value.
+if command -v locale >/dev/null 2>&1; then
+	locale_is_supported() {
+		LC_ALL=C locale -a | grep -Fxq "$1"
+	}
+
+	# macOS indiscriminately sets locale variables, so for macOS we
+	# cannot preserve incoming locale and must initialize every time.
+	if [ -z "${LANG+x}" ] || [ "$OS" = darwin ]; then
+		# workaround Terminal.app LC_CTYPE=UTF-8 bug
+		unset LC_CTYPE
+		if locale_is_supported en_US.UTF-8; then
+			export LANG=en_US.UTF-8
+		elif locale_is_supported C.UTF-8; then
+			export LANG=C.UTF-8
+		else
+			export LANG=C
 		fi
-	done
+	fi
 fi
 
-# prevent newer macOS systems from admonishing me.
+# Prevent newer macOS systems from admonishing me.
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 [ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
