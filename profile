@@ -148,7 +148,7 @@ if command -v locale >/dev/null 2>&1; then
 
 	# macOS indiscriminately sets locale variables, so for macOS we
 	# cannot preserve incoming locale and must initialize every time.
-	if [ -z "${LANG+x}" ] || [ "$OS" = darwin ]; then
+	if [ -z "${LANG:-}" ] || [ "$OS" = darwin ]; then
 		# workaround Terminal.app LC_CTYPE=UTF-8 bug
 		unset LC_CTYPE
 		if locale_is_supported en_US.UTF-8; then
