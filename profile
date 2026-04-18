@@ -1,7 +1,7 @@
 # Don't set -e because we want to be able to login even if sourcing
 # the profile fails.
 
-OS="$(uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/')"
+os=$(uname -s)
 
 # Sorted by preference. GHCup has to come before Cabal.
 PATHS_USER="
@@ -14,7 +14,7 @@ PATHS_USER="
 "
 
 # On SmartOS we want pkgsrc in front of /usr/bin.
-if [ "$OS" = sunos ]; then
+if [ "$os" = "SunOS" ]; then
 	PATHS_SMARTOS="
 		/opt/local/bin
 		/opt/local/sbin
