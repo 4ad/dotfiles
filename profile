@@ -4,7 +4,7 @@
 os=$(uname -s)
 
 # Sorted by preference. GHCup has to come before Cabal.
-PATHS_USER="
+paths_user="
 	${HOME}/bin
 	${HOME}/.local/bin
 	${HOME}/.cargo/bin
@@ -15,7 +15,7 @@ PATHS_USER="
 
 # On SmartOS we want pkgsrc in front of /usr/bin.
 if [ "$os" = "SunOS" ]; then
-	PATHS_SMARTOS="
+	paths_smartos="
 		/opt/local/bin
 		/opt/local/sbin
 		/opt/tools/bin
@@ -25,9 +25,9 @@ fi
 
 # Sorted by preference. On macOS path_helper(8) might reset
 # the order, that's fine.
-PATHS_SYS="
+paths_sys="
 	/proc/boot
-	${PATHS_SMARTOS}
+	${paths_smartos}
 	/usr/sbin
 	/usr/bsd
 	/usr/bin
@@ -69,17 +69,15 @@ PATHS_SYS="
 	/opt/sw
 "
 
-# unset BIN so this script is idempotent.
-unset BIN
-for i in $PATHS_USER $PATHS_SYS; do
+for i in $paths_user $paths_sys; do
 	# Add to $PATH if directory exists and is not a symlink.
 	# This avoids duplicate PATH entries on systems where
 	# /bin is a symlink to /usr/bin (Solaris, modern Linux, etc).
-	[ -d "$i" ] && [ ! -h "$i" ] && BIN="${BIN:+$BIN:}$i"
+	[ -d "$i" ] && [ ! -h "$i" ] && bin="${bin:+$bin:}$i"
 done
 
 # It's safe to set $PATH here.
-export PATH=$BIN
+export PATH=$bin
 
 # Run path_helper(8), if available. This is macOS specific.
 # It adds macOS cryptexes to the PATH as well as .pkg packages
@@ -103,11 +101,11 @@ if [ -r $HOME/.opam/opam-init/init.sh ]; then
 fi
 
 # Check for Plan 9 tools.
-PLAN9S="
+plan9_dirs="
 	${HOME}/plan9
 	/usr/local/plan9
 "
-for i in $PLAN9S; do
+for i in $plan9_dirs; do
 	if [ -f "$i/include/u.h" ]; then
 		export PLAN9=$i
 		break
