@@ -4,6 +4,11 @@
 # Sometimes the shell tries to source this file even if not interactive
 case $- in *i*) ;; *) return ;; esac
 
+# macOS Terminal.app may inject a broken LC_CTYPE=UTF-8 value.
+if [ "${LC_CTYPE-}" = UTF-8 ]; then
+	unset LC_CTYPE
+fi
+
 OS="$(uname | tr A-Z a-z | sed 's/mingw/windows/; s/.*windows.*/windows/')"
 
 # Don't use hostname -s, some systems don't support -s;

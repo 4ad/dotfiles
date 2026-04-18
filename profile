@@ -139,8 +139,7 @@ else
 fi
 
 # Set LANG when unset. On macOS, always set it because /etc/zprofile
-# indiscriminately sets LANG=C.UTF-8. Additionally Terminal.app may
-# inject a broken LC_CTYPE=UTF-8 value.
+# indiscriminately sets LANG=C.UTF-8.
 if command -v locale >/dev/null 2>&1; then
 	locale_is_supported() {
 		LC_ALL=C locale -a | grep -Fxq "$1"
@@ -149,8 +148,6 @@ if command -v locale >/dev/null 2>&1; then
 	# macOS indiscriminately sets locale variables, so for macOS we
 	# cannot preserve incoming locale and must initialize every time.
 	if [ -z "${LANG:-}" ] || [ "$OS" = darwin ]; then
-		# workaround Terminal.app LC_CTYPE=UTF-8 bug
-		unset LC_CTYPE
 		if locale_is_supported en_US.UTF-8; then
 			export LANG=en_US.UTF-8
 		elif locale_is_supported C.UTF-8; then
