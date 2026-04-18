@@ -138,26 +138,6 @@ else
 	fi
 fi
 
-# Set LANG when unset. On macOS, always set it because /etc/zprofile
-# indiscriminately sets LANG=C.UTF-8.
-if command -v locale >/dev/null 2>&1; then
-	locale_is_supported() {
-		LC_ALL=C locale -a | grep -Fxq "$1"
-	}
-
-	# macOS indiscriminately sets locale variables, so for macOS we
-	# cannot preserve incoming locale and must initialize every time.
-	if [ -z "${LANG:-}" ] || [ "$OS" = darwin ]; then
-		if locale_is_supported en_US.UTF-8; then
-			export LANG=en_US.UTF-8
-		elif locale_is_supported C.UTF-8; then
-			export LANG=C.UTF-8
-		else
-			export LANG=C
-		fi
-	fi
-fi
-
 # Prevent newer macOS systems from admonishing me.
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
