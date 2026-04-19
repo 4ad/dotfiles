@@ -75,7 +75,7 @@ for i in $paths_user $paths_sys; do
 	# Add to $PATH if directory exists and is not a symlink.
 	# This avoids duplicate PATH entries on systems where
 	# /bin is a symlink to /usr/bin (Solaris, modern Linux, etc).
-	[ -d "$i" ] && [ ! -h "$i" ] && bin="${bin:+$bin:}$i"
+	[ -d "$i" ] && [ ! -L "$i" ] && bin="${bin:+$bin:}$i"
 done
 
 # It's safe to set $PATH here.
