@@ -18,7 +18,7 @@ host=${host%%.*}
 PS1='$(printf "%s" "'"${host}"':`basename "${PWD}"`$ ")'
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
-export CDPATH=.:$HOME
+CDPATH=.:$HOME
 if [ -d $HOME/src ]; then
 	CDPATH=$CDPATH:$HOME/src:$HOME/src/mgk.ro:$HOME/src/mgk.ro/cmd:$HOME/src/mgk.ro/cmd/plan9
 fi
