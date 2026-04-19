@@ -26,10 +26,8 @@ fi
 # Sorted by preference. On macOS path_helper(8) might reset
 # the order, that's fine.
 paths_sys="
-	/proc/boot
 	${paths_smartos}
 	/usr/sbin
-	/usr/bsd
 	/usr/bin
 	/sbin
 	/bin
@@ -40,22 +38,15 @@ paths_sys="
 	/usr/openwin/bin
 	/usr/X11R7/bin
 	/usr/X11R6/bin
-	/usr/X11/bin
-	/opt/X11/bin
-	/usr/bin/X11
-	/usr/X/bin
 	/usr/ucb
 	/usr/games
 	/Library/Apple/usr/bin
-	/opt/bin
 	/opt/DTT
 	/opt/DTT/bin
 	/usr/local/go/bin
 	/usr/sfw/bin
 	/usr/pkg/bin
 	/usr/pkg/sbin
-	/opt/local/bin
-	/opt/local/sbin
 	/usr/local/bin
 	/usr/local/sbin
 	/usr/local/games
@@ -63,10 +54,6 @@ paths_sys="
 	/opt/homebrew/sbin
 	/opt/ooce/bin
 	/opt/sfw/bin
-	/opt/freeware/bin
-	/usr/freeware/bin
-	/usr/nekoware/bin
-	/opt/sw
 "
 
 # unset these so this script is idempotent.
