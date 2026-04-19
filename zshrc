@@ -1,9 +1,9 @@
-[[ -f $HOME/.rc ]] && . $HOME/.rc
+[[ -f $HOME/.shrc ]] && . $HOME/.shrc
 
-# PS1 set in .rc doesn't work in zsh, so we fix it here.
+# PS1 set in .shrc doesn't work in zsh, so we fix it here.
 PS1='%m:%1d$ '
 
-# Redo what we did in .rc, but unset above.
+# Redo what we did in .shrc, but unset above.
 if [ "$TERM" = 9term ] || [ "$TERM" = dumb ]; then
 	# Disable readline and bracketed paste.
 	unsetopt zle

@@ -95,8 +95,9 @@ fi
 export GOPATH=$HOME
 
 # Check for a local OCaml. This has to happen after setting PATH.
-if [ -r $HOME/.opam/opam-init/init.sh ]; then
-	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+# We only want opam's environment here, not its interactive shell hooks.
+if [ -r $HOME/.opam/opam-init/variables.sh ]; then
+	. $HOME/.opam/opam-init/variables.sh > /dev/null 2> /dev/null || true
 fi
 
 # Check for Plan 9 tools.
@@ -140,5 +141,5 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 [ -f $HOME/lib/profile.local ] && . $HOME/lib/profile.local
 
-# Some shells source $ENV when they're interactive
-export ENV=$HOME/.rc
+# Some shells source $ENV when they're interactive.
+export ENV=$HOME/.shinit

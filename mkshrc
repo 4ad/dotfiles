@@ -1,1 +1,1 @@
-[ -f "$HOME/.rc" ] && . "$HOME/.rc"
+[ -f "$HOME/.shrc" ] && . "$HOME/.shrc"

@@ -1,17 +1,18 @@
 # Don't set -e because we want to be able to login even if sourcing
 # the profile fails.
 
-# Sometimes the shell tries to source this file even if not interactive
-case $- in *i*) ;; *) return ;; esac
+os=$(uname -s)
+host=$(uname -n)
+host=${host%%.*}
+
+# bosh (Schily Bourne Shell) needs this for command substitution
+# in PS1.
+(set -o promptcmdsubst) >/dev/null 2>&1 && set -o promptcmdsubst
 
 # macOS Terminal.app may inject a broken LC_CTYPE=UTF-8 value.
 if [ "${LC_CTYPE-}" = UTF-8 ]; then
 	unset LC_CTYPE
 fi
-
-os=$(uname -s)
-host=$(uname -n)
-host=${host%%.*}
 
 # Prompt is set here before the Plan 9 tools because they might
 # overwrite it for dumb terminals.

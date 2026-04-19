@@ -29,16 +29,20 @@ Supported operating systems:
 Other systems may or may not work.
 
 Supported shells:
-- bash 3.2.57       (latest version shipped with macOS)
-- bash              (modern versions)
+- bash 3.2.57         (latest version shipped with macOS)
+- bash                (modern versions)
+- zsh
 - ksh93
+- pdksh
 - ash
-- dash              (NetBSD ash derivative)
 - FreeBSD `/bin/sh`   (ash derivative)
 - NetBSD `/bin/sh`    (ash derivative)
 - OpenBSD `/bin/ksh`  (pdksh derivative)
-- yash              (maximally POSIX-compliant shell)
-- zsh
+- mksh                (MirBSD Korn Shell)
+- dash                (NetBSD ash derivative)
+- yash                (maximally POSIX-compliant shell)
+- bosh                (Schily Bourne Shell)
+- BusyBox ash
 
 Pre-POSIX SVR Bourne shells (like `/bin/sh` in Solaris 8/9/10) are
 not supported.
