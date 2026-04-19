@@ -15,7 +15,7 @@ host=${host%%.*}
 
 # Prompt is set here before the Plan 9 tools because they might
 # overwrite it for dumb terminals.
-PS1='$(printf "%s" "'"${host}"':`basename ${PWD}`$ ")'
+PS1='$(printf "%s" "'"${host}"':`basename "${PWD}"`$ ")'
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
 export CDPATH=.:$HOME
@@ -66,7 +66,7 @@ if [ -n "$PLAN9" ]; then
 		export PAGER="$(command -v nobs 2>/dev/null)" # Solaris needs full path
 		# Set prompt so we can execute whole line
 		# without $PS1 interfering.
-		PS1='$(printf "%s" ": ${host}:`basename ${PWD}`; ")'
+		PS1='$(printf "%s" "'": ${host}"':`basename "${PWD}"`; ")'
 	fi
 
 	_acme() {
