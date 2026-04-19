@@ -1,8 +1,0 @@
-To install:
-
-    ./install.sh                   # if POSIX /bin/sh
-    /usr/xpg4/bin/sh install.sh    # pre-POSIX SVR Bourne /bin/sh
-
-Install script supports -p (pretend) and -d dir (install in dir).
-
-Everything is public domain.
