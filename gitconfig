@@ -10,5 +10,5 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	defaultKeyCommand = /Users/aram/bin/git-config-helper-gpg.ssh.defaultKeyCommand
-	allowedSignersFile = /Users/aram/.ssh/allowed_signers
+	defaultKeyCommand = ~/bin/git-config-helper-gpg.ssh.defaultKeyCommand
+	allowedSignersFile = ~/.ssh/allowed_signers
