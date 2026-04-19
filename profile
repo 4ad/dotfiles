@@ -69,6 +69,8 @@ paths_sys="
 	/opt/sw
 "
 
+# unset bin so this script is idempotent.
+unset bin
 for i in $paths_user $paths_sys; do
 	# Add to $PATH if directory exists and is not a symlink.
 	# This avoids duplicate PATH entries on systems where
