@@ -18,6 +18,11 @@ host=${host%%.*}
 PS1='$(printf "%s" "'"${host}"':`basename ${PWD}`$ ")'
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
+export CDPATH=.:$HOME
+if [ -d $HOME/src ]; then
+	CDPATH=$CDPATH:$HOME/src:$HOME/src/mgk.ro:$HOME/src/mgk.ro/cmd:$HOME/src/mgk.ro/cmd/plan9
+fi
+
 # PAGER is set before the Plan 9 tools because they might
 # overwrite it.
 if command -v less >/dev/null 2>&1; then

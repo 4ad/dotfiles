@@ -90,11 +90,6 @@ fi
 # there could be a local Go install there.
 export GOPATH=$HOME
 
-export CDPATH=.:$HOME
-if [ -d $HOME/src ]; then
-	CDPATH=$CDPATH:$HOME/src:$HOME/src/mgk.ro:$HOME/src/mgk.ro/cmd:$HOME/src/mgk.ro/cmd/plan9
-fi
-
 # Check for a local OCaml. This has to happen after setting PATH.
 if [ -r $HOME/.opam/opam-init/init.sh ]; then
 	. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
