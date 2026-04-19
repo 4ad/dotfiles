@@ -113,7 +113,7 @@ if [ -n "$PLAN9" ]; then
 
 	display=${DISPLAY:-:0}
 	nsdisplay=$(printf '%s' "$display" | tr '/' '_')
-	export NAMESPACE=/tmp/ns.$USER.$nsdisplay
+	export NAMESPACE=/tmp/ns.$LOGNAME.$nsdisplay
 	mkdir -p "$NAMESPACE"
 
 	if fontsrv -p LucidaGrandeMono >/dev/null 2>&1; then
@@ -124,7 +124,7 @@ if [ -n "$PLAN9" ]; then
 
 	# Equivalent variables for rc(1).
 	export home=$HOME
-	export user=$USER
+	export user=$LOGNAME
 else
 	# If we don't have plan9port, perhaps we might have 9base. If we do,
 	# we add to the $PATH so sam -r host works.
