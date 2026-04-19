@@ -69,14 +69,29 @@ paths_sys="
 	/opt/sw
 "
 
-# unset bin so this script is idempotent.
-unset bin
+# unset these so this script is idempotent.
+unset bin path_entries
+path_entries=
 for i in $paths_user $paths_sys; do
-	# Add to $PATH if directory exists and is not a symlink.
-	# This avoids duplicate PATH entries on systems where
-	# /bin is a symlink to /usr/bin (Solaris, modern Linux, etc).
-	[ -d "$i" ] && [ ! -L "$i" ] && bin="${bin:+$bin:}$i"
+	[ -d "$i" ] || continue
+
+	seen=false
+	old_ifs=$IFS
+	IFS=:
+	for j in $path_entries; do
+		# Non-POSIX, but supported everywhere we care about.
+		if [ "$i" = "$j" ] || /bin/test "$i" -ef "$j"; then
+			seen=true
+			break
+		fi
+	done
+	IFS=$old_ifs
+	$seen && continue
+
+	bin="${bin:+$bin:}$i"
+	path_entries="${path_entries:+$path_entries:}$i"
 done
+unset i j seen old_ifs path_entries
 
 # It's safe to set $PATH here.
 export PATH=$bin
