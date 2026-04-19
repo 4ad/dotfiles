@@ -52,7 +52,7 @@ for f in "$srcdir"/*; do
 
 	b=${f##*/}
 	case $b in
-	README|make.*) continue ;;
+	README.md|install.sh|LICENSE) continue ;;
 	esac
 
 	run cp "$f" "$instdir/.$b"
