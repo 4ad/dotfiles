@@ -97,6 +97,12 @@ export GOPATH=$HOME
 # Check for a local OCaml. This has to happen after setting PATH.
 # We only want opam's environment here, not its interactive shell hooks.
 if [ -r $HOME/.opam/opam-init/variables.sh ]; then
+	# opam initialization bails out if OPAM_SWITCH_PREFIX is
+	# already set. Since we reset the environment from scratch
+	# clear inherited opam state so a fresh login shell reconstructs
+	# a consistent default opam environment.
+	unset OPAM_LAST_ENV OPAMROOT OPAMROOTISOK OPAMSWITCH OPAM_SWITCH_PREFIX
+	unset OCAMLTOP_INCLUDE_PATH CAML_LD_LIBRARY_PATH OCAML_TOPLEVEL_PATH
 	. $HOME/.opam/opam-init/variables.sh > /dev/null 2> /dev/null || true
 fi
 
