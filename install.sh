@@ -63,7 +63,7 @@ for d in "$srcdir"/.[!.]* "$srcdir"/..?* "$srcdir"/*; do
 
 	b=${d##*/}
 	case $b in
-	.git|.|..) continue ;;
+	.git|.vscode|.|..) continue ;;
 	esac
 
 	run cp -R -P "$d" "$instdir"
