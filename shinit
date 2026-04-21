@@ -3,13 +3,10 @@
 
 # Some pdksh-derived shells such as NetBSD /bin/sh incorrectly source
 # ENV when not interactive. Exit early so we don't leak interactive-only
-# features into into shell scripts.
+# features into shell scripts.
 case $- in
 *i*) ;;
 *) return ;;
 esac
-
-# NetBSD /bin/sh and pdksh need this for command substitution in PS1.
-(set -o promptcmds) >/dev/null 2>&1 && set -o promptcmds
 
 [ -f "$HOME/.shrc" ] && . "$HOME/.shrc"

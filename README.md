@@ -47,6 +47,9 @@ Supported shells:
 Pre-POSIX SVR Bourne shells (like `/bin/sh` in Solaris 8/9/10) are
 not supported.
 
+Shells which do not support `PS1` command substitution will only get
+a basic `PS1` prompt.
+
 # License
 
 Public domain.

@@ -5,18 +5,32 @@ os=$(uname -s)
 host=$(uname -n)
 host=${host%%.*}
 
-# bosh (Schily Bourne Shell) needs this for command substitution
-# in PS1.
-(set -o promptcmdsubst) >/dev/null 2>&1 && set -o promptcmdsubst
-
 # macOS Terminal.app may inject a broken LC_CTYPE=UTF-8 value.
 if [ "${LC_CTYPE-}" = UTF-8 ]; then
 	unset LC_CTYPE
 fi
 
+# NetBSD /bin/sh requires PS1 command substitution be
+# explicitly enabled.
+ps1_cmdsubst=
+if [ -n "${NETBSD_SHELL-}" ]; then
+	set -o promptcmds
+	ps1_cmdsubst=1
+fi
+
+# bash, ksh93, pdksh/OpenBSD ksh, mksh and yash are known to support
+# PS1 command substitution.
+if [ -n "${BASH_VERSION-}" ] ||
+    [ -n "${KSH_VERSION-}" ] ||
+    [ -n "${YASH_VERSION-}" ]; then
+	ps1_cmdsubst=1
+fi
+
 # Prompt is set here before the Plan 9 tools because they might
 # overwrite it for dumb terminals.
-PS1='$(printf "%s" "'"${host}"':`basename "${PWD}"`$ ")'
+if [ -n "$ps1_cmdsubst" ]; then
+	PS1='$(printf "%s" "'"${host}"':`basename "${PWD}"`$ ")'
+fi
 # Above prompt doesn't work in zsh, fixed in .zshrc
 
 CDPATH=.:$HOME
@@ -67,7 +81,11 @@ if [ -n "$PLAN9" ]; then
 		export PAGER="$(command -v nobs 2>/dev/null)" # Solaris needs full path
 		# Set prompt so we can execute whole line
 		# without $PS1 interfering.
-		PS1='$(printf "%s" "'": ${host}"':`basename "${PWD}"`; ")'
+		if [ -n "$ps1_cmdsubst" ]; then
+			PS1='$(printf "%s" "'": ${host}"':`basename "${PWD}"`; ")'
+		else
+			PS1=': ; '
+		fi
 	fi
 
 	_acme() {
