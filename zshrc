@@ -1,5 +1,8 @@
 [[ -f $HOME/.shrc ]] && . $HOME/.shrc
 
+# allow comments even in interactive shells.
+setopt interactivecomments
+
 # PS1 set in .shrc doesn't work in zsh, so we fix it here.
 PS1='%m:%1d$ '
 
